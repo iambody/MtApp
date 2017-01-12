@@ -1,5 +1,6 @@
 package io.vtown.WuMaiApp.ui.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.method.ScrollingMovementMethod;
@@ -31,12 +32,21 @@ public class AMain extends ABase {
     @Bind(R.id.loaction_txt)
     TextView loactionTxt;
 
+    private Button zhuyemian;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         loactionTxt.setMovementMethod(ScrollingMovementMethod.getInstance());
+        zhuyemian = (Button) findViewById(R.id.zhuyemian);
+        zhuyemian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AMain.this.startActivity(new Intent(AMain.this, AHome.class));
+            }
+        });
     }
 
 

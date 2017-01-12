@@ -9,10 +9,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="获取坐标" />
-
+    <Button
+        android:id="@+id/zhuyemian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="主页面" />
     <TextView
         android:id="@+id/loaction_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black" />
+
 </LinearLayout>
