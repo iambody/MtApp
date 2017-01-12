@@ -151,4 +151,28 @@
     <color name="darkblue">#00008b</color> <!-- 暗蓝色 -->
     <color name="navy">#000080</color> <!-- 海军色 -->
     <color name="black">#000000</color> <!-- 黑色 -->
+    <color name="shadow">#25808080</color>
+
+
+
+    <color name="dialog_bg">#f5f5f5</color>
+    <color name="triangle">#aa72d572</color>
+    <color name="circle">#aa738ffe</color>
+    <color name="rect">#aae84e40</color>
+    <color name="view_bg">#00000000</color>
+
+
+    <color name="app_line">#dcdcdc</color>
+    <color name="app_line1">#11dcdcdc</color>
+    <color name="app_line2">#efefef</color>
+    <color name="app_gray">#a9abac</color>
+    <color name="app_gray1">#dfdfdf</color>
+    <color name="app_black">#1c1c1c</color>
+
+    <color name="app_fen4">#FF4747</color>
+    <color name="app_fen3">#5cFF4878</color>
+    <color name="app_fen1">#99FF4878</color>
+    <color name="transparent3">#2c000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="app_fen2">#abFF4878</color>
 </resources>
