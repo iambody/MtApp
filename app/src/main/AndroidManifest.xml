@@ -47,7 +47,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ALoad">
+        <activity android:name=".ui.ALoad">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

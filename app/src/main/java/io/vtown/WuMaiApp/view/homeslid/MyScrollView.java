@@ -57,7 +57,6 @@ public class MyScrollView extends ScrollView implements SlidingDetailsLayout.Top
             bottom = diff == 0;
         }
 
-
     }
 
     @Override

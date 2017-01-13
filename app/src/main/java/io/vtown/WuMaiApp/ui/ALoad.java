@@ -1,12 +1,11 @@
-package io.vtown.WuMaiApp.ui.ui;
+package io.vtown.WuMaiApp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.text.method.ScrollingMovementMethod;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -15,44 +14,45 @@ import com.baidu.location.Poi;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.vtown.WuMaiApp.MyApplication;
 import io.vtown.WuMaiApp.R;
+import io.vtown.WuMaiApp.Utilss.StrUtils;
+import io.vtown.WuMaiApp.constant.PromptManager;
 import io.vtown.WuMaiApp.service.LocationService;
-import io.vtown.WuMaiApp.ui.ABase;
+import io.vtown.WuMaiApp.ui.ui.AHome;
 
-/**
- * Created by datutu on 2017/1/10.
- */
-
-public class AMain extends ABase {
+public class ALoad extends ABase {
+    @Bind(R.id.loading_bg_iv)
+    ImageView loadingBgIv;
     private LocationService locationService;
-    @Bind(R.id.loaction_bt)
-    Button loactionBt;
-    @Bind(R.id.loaction_txt)
-    TextView loactionTxt;
-
-    private Button zhuyemian;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_aload);
         ButterKnife.bind(this);
-        loactionTxt.setMovementMethod(ScrollingMovementMethod.getInstance());
-        zhuyemian = (Button) findViewById(R.id.zhuyemian);
-        zhuyemian.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AMain.this.startActivity(new Intent(AMain.this, AHome.class));
-            }
-        });
+//        startActivity(new Intent(ALoad.this, AMain.class).putExtra("from", 0));
+
     }
 
+    private void ISplash() {
+        AlphaAnimation aa = new AlphaAnimation(0f, 1.0f);
+        aa.setDuration(2000);
+        loadingBgIv.startAnimation(aa);
+    }
 
-    /***
-     * Stop location service
-     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        locationService = ((MyApplication) getApplication()).locationService;
+        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+        locationService.registerListener(mListener);
+        locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+        locationService.start();// 定位SDK
+
+
+    }
+
     @Override
     protected void onStop() {
         locationService.unregisterListener(mListener); //注销掉监听
@@ -60,36 +60,6 @@ public class AMain extends ABase {
         super.onStop();
     }
 
-    @Override
-    protected void onStart() {
-
-        super.onStart();
-        // -----------location config ------------
-        locationService = ((MyApplication) getApplication()).locationService;
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
-        locationService.registerListener(mListener);
-        //注册监听
-        int type = getIntent().getIntExtra("from", 0);
-        if (type == 0) {
-            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-        } else if (type == 1) {
-            locationService.setLocationOption(locationService.getOption());
-        }
-        loactionBt.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (loactionBt.getText().toString().equals(getString(R.string.startlocation))) {
-                    locationService.start();// 定位SDK
-                    // start之后会默认发起一次定位请求，开发者无须判断isstart并主动调用request
-                    loactionBt.setText(getString(R.string.stoplocation));
-                } else {
-                    locationService.stop();
-                    loactionBt.setText(getString(R.string.startlocation));
-                }
-            }
-        });
-    }
 
     /*****
      * 定位结果回调，重写onReceiveLocation方法，可以直接拷贝如下代码到自己工程中修改
@@ -126,6 +96,8 @@ public class AMain extends ABase {
                 sb.append("\ncity : ");// 城市
                 sb.append(location.getCity());
                 sb.append("\nDistrict : ");// 区
+
+                PromptManager.ShowCustomToast(BaseContext, "城市" + location.getDistrict());
                 sb.append(location.getDistrict());
                 sb.append("\nStreet : ");// 街道
                 sb.append(location.getStreet());
@@ -178,26 +150,13 @@ public class AMain extends ABase {
                     sb.append("\ndescribe : ");
                     sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
                 }
-                logMsg(sb.toString());
+//                logMsg(sb.toString());
+                if (!StrUtils.isEmpty(location.getDistrict())) {
+                    PromptManager.SkipActivity(BaseActiviy, new Intent(BaseActiviy, AHome.class).putExtra(AHome.Tag_CityName, location.getCity()));
+                    BaseActiviy.finish();
+                }
             }
         }
 
     };
-
-    //
-
-    /**
-     * 显示请求字符串
-     *
-     * @param str
-     */
-    public void logMsg(String str) {
-        try {
-            if (loactionTxt != null)
-                loactionTxt.setText(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(AMain.this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
 }

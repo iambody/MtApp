@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -16,15 +17,33 @@ import io.vtown.WuMaiApp.view.dialog.CustomDialog;
  */
 
 public class ABase extends AppCompatActivity {
+    /**
+     * 基上下文
+     */
     protected Context BaseContext;
     protected Activity BaseActiviy;
+    /**
+     * 屏幕宽度
+     */
+    protected int screenWidth;
+    /**
+     * 屏幕高度
+     */
+    protected int screenHeight;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ConfigBase();
+    }
+
+    private void ConfigBase() {
         this.BaseContext = this;
         this.BaseActiviy = this;
+        screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        screenHeight = getWindowManager().getDefaultDisplay().getHeight();
     }
+
 
     /**
      * 左右选择弹出框的封装

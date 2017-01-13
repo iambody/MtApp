@@ -7,34 +7,41 @@
     <io.vtown.WuMaiApp.view.homeslid.MyScrollView
         android:id="@+id/home_up_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/home_up_scrollview_in_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/app_fen1"
+             >
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:background="#66ff0000"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:text="This is frist child view" />
 
-            <Button
+
+            <TextView
                 android:id="@+id/test"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="test" />
+                android:layout_alignParentBottom="true"
+                android:text="ssssss"
+               android:background="@color/white"/>
 
-        </LinearLayout>
+        </RelativeLayout>
     </io.vtown.WuMaiApp.view.homeslid.MyScrollView>
 
     <TextView
         android:id="@+id/home_scroll_note"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:gravity="center"
         android:padding="10dp"
+        android:visibility="gone"
         android:text="上拉或下拉显示更多" />
 
     <io.vtown.WuMaiApp.view.homeslid.MyScrollView

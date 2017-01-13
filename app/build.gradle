@@ -28,11 +28,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/BaiduLBS_Android.jar')
     compile 'com.jakewharton:butterknife:7.0.0'
-
-
-
-
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile files('libs/volley.jar')
 }
