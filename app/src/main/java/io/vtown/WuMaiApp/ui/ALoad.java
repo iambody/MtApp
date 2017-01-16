@@ -19,6 +19,7 @@ import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
 import io.vtown.WuMaiApp.constant.PromptManager;
 import io.vtown.WuMaiApp.service.LocationService;
+import io.vtown.WuMaiApp.ui.ui.ACitys;
 import io.vtown.WuMaiApp.ui.ui.AHome;
 import io.vtown.WuMaiApp.ui.ui.ANewHome;
 
@@ -32,7 +33,7 @@ public class ALoad extends ABase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aload);
         ButterKnife.bind(this);
-        startActivity(new Intent(ALoad.this, ANewHome.class));
+        startActivity(new Intent(ALoad.this, ACitys.class));
 
     }
 

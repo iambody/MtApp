@@ -5,4 +5,5 @@
     <string name="error_code_desc">错误码说明</string>
     <string name="nullstr">--</string>
     <string name="error_fuwuqi">获取数据异常</string>
+
 </resources>

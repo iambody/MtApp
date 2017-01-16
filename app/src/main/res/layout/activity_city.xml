@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_bar" />
+
+
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <io.vtown.WuMaiApp.view.custom.DragListView
+               android:id="@+id/dvl_drag_list"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+
+               />
+
+           <ImageView
+               android:id="@+id/iv_add_city"
+               android:layout_width="wrap_content"
+               android:src="@drawable/error"
+               android:layout_alignParentBottom="true"
+               android:layout_centerInParent="true"
+               android:layout_marginBottom="16dp"
+               android:layout_height="wrap_content" />
+
+
+       </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
