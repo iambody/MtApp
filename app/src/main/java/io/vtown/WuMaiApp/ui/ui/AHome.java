@@ -2,9 +2,10 @@ package io.vtown.WuMaiApp.ui.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,10 +33,11 @@ import io.vtown.WuMaiApp.view.homeslid.SlidingDetailsLayout;
 
 public class AHome extends ABase {
     public static final String Tag_CityName = "tagcity";
+    @Bind(R.id.home_hscrollview_lay)
+    LinearLayout homeHscrollviewLay;
     private String CityName;
 
-    @Bind(R.id.test)
-    TextView test;
+
     @Bind(R.id.home_up_scrollview)
     MyScrollView homeUpScrollview;
     @Bind(R.id.home_scroll_note)
@@ -106,7 +108,33 @@ public class AHome extends ABase {
         FrameLayout.LayoutParams inps = new FrameLayout.LayoutParams(screenWidth, screenHeight - DimensionPixelUtil.dip2px(BaseContext, 26));
         homeUpScrollviewInLay.setLayoutParams(inps);
 
+        IUPView();
+        IDownView();
+
     }
+
+    /**
+     * 初始化上边的View
+     */
+    private void IUPView() {
+//
+        for (int i = 0; i < 24; i++) {
+            View ItemView = LayoutInflater.from(BaseContext).inflate(R.layout.item_home_hscrollview, null);
+            ImageView Itemiv = (ImageView) ItemView.findViewById(R.id.item_home_hscrollview_iv);
+            TextView ItemTxt = (TextView) ItemView.findViewById(R.id.item_home_hscrollview_txt);
+            Itemiv.setImageResource(R.mipmap.ic_launcher);
+            ItemTxt.setText(String.format("第%s时",(i+1)+""));
+            homeHscrollviewLay.addView(ItemView);
+
+        }
+    }
+
+    /**
+     * 初始化下边的view
+     */
+    private void IDownView() {
+    }
+
 
     private void IGetCityCode(String cityName) {
         NHttpBaseStr BaNHttpBaseStr = new NHttpBaseStr(BaseContext);

@@ -18,6 +18,23 @@ android {
         }
     }
 }
+//signingConfigs {
+//    release {
+//        storeFile file("../maitai.jks")
+//        storePassword "123456"
+//        keyAlias "maitai"
+//        keyPassword "123456"
+//    }
+//}
+//buildTypes {
+//    debug {
+//        signingConfig signingConfigs.release
+//    }
+//    release {
+//        signingConfig signingConfigs.release
+//    }
+//}
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

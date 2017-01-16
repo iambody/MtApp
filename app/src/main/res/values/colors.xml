@@ -175,4 +175,11 @@
     <color name="transparent3">#2c000000</color>
     <color name="transparent">#00000000</color>
     <color name="app_fen2">#abFF4878</color>
+    <color name="level1">#8AC15A</color>
+    <color name="level2">#ECC560</color>
+    <color name="level3">#EC855D</color>
+    <color name="level4">#9E4557</color>
+    <color name="level5">#72243A</color>
+    <color name="level6">#480936</color>
+    <color name="level7">#1A0313</color>
 </resources>
