@@ -173,6 +173,7 @@
     <color name="app_fen3">#5cFF4878</color>
     <color name="app_fen1">#99FF4878</color>
     <color name="transparent3">#2c000000</color>
+    <color name="transparent4">#6cffffff</color>
     <color name="transparent">#00000000</color>
     <color name="app_fen2">#abFF4878</color>
     <color name="level1">#8AC15A</color>

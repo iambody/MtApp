@@ -7,7 +7,7 @@ import java.util.List;
  * Created by datutu on 2017/1/13.
  */
 
-public class AHome extends BBase {
+public class BHome extends BBase {
     private String count;//": 24,
     private String startTime;//": "2017011317",
     private String endTime;//": "2017011416",

@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-</LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/newhome_viewpage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/newhome_title_up_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent4"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/newhome_city_bt"
+            android:layout_width="@dimen/ui_40_dip"
+            android:layout_height="@dimen/ui_40_dip"
+            android:padding="10dp"
+            android:src="@mipmap/newhome_up_city_iv" />
+
+        <TextView
+            android:id="@+id/newhome_city_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="我的title"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/newhome_share_bt"
+            android:layout_width="@dimen/ui_40_dip"
+            android:layout_height="@dimen/ui_40_dip"
+            android:padding="10dp"
+            android:src="@mipmap/newhome_up_share_iv" />
+    </LinearLayout>
+</RelativeLayout>
