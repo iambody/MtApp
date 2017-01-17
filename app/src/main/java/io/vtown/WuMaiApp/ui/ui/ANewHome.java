@@ -1,12 +1,12 @@
 package io.vtown.WuMaiApp.ui.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +25,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.vtown.WuMaiApp.Net.vollynet.NHttpBaseStr;
 import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
@@ -90,6 +91,17 @@ public class ANewHome extends ABase {
         mybudl.putInt("screenHeight", screenHeight);
         f.setArguments(mybudl);
         return f;
+    }
+
+    @OnClick({R.id.newhome_city_bt, R.id.newhome_share_bt})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.newhome_city_bt:
+                PromptManager.SkipActivity1(BaseActiviy,new Intent(BaseActiviy,ACitys.class));
+                break;
+            case R.id.newhome_share_bt:
+                break;
+        }
     }
 
     private class MyViewPage extends FragmentPagerAdapter {

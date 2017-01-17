@@ -425,7 +425,8 @@ public class PromptManager {
      */
     public static void SkipActivity1(Activity activity, Intent intent) {
         activity.startActivity(intent);
-
+        activity.overridePendingTransition(R.anim.push_left_in,
+                R.anim.push_left_out);
     }
 
     /**
