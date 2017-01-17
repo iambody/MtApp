@@ -4,16 +4,27 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp">
-
+    android:layout_marginRight="16dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@color/transparent">
+    <TextView
+        android:id="@+id/item_home_hscrollview_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"/>
     <ImageView
         android:id="@+id/item_home_hscrollview_iv"
         android:layout_width="@dimen/ui_40_dip"
         android:layout_height="@dimen/ui_40_dip" />
 
     <TextView
-        android:id="@+id/item_home_hscrollview_txt"
+        android:id="@+id/item_home_hscrollview_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+      />
 </LinearLayout>

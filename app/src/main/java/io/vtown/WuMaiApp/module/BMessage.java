@@ -13,6 +13,10 @@ public class BMessage extends BBase {
      * fragment里面滑动scrollview时候通知移动距离
      */
     public static final int Tage_HomeScrollY = 10;
+    //fragment想home发送数据刷新背景图片
+    public static final int Tage_F_To_Home_Data = 11;
+
+    private BHome myBHome;
 
     public BMessage() {
     }
@@ -36,5 +40,13 @@ public class BMessage extends BBase {
 
     public void setHomeScrollY(int homeScrollY) {
         HomeScrollY = homeScrollY;
+    }
+
+    public BHome getMyBHome() {
+        return myBHome;
+    }
+
+    public void setMyBHome(BHome myBHome) {
+        this.myBHome = myBHome;
     }
 }

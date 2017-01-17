@@ -6,8 +6,8 @@ package io.vtown.WuMaiApp.module;
 
 public class BAqi extends BBase {
     private String aqi;//": 40,
-    private String p25;//": 28,
-    private String api_level;//": 0,
+
+    private int aqi_level;//": 0,
     private String hour;//": "现在"
 
     public String getAqi() {
@@ -18,20 +18,13 @@ public class BAqi extends BBase {
         this.aqi = aqi;
     }
 
-    public String getP25() {
-        return p25;
+
+    public int getAqi_level() {
+        return aqi_level;
     }
 
-    public void setP25(String p25) {
-        this.p25 = p25;
-    }
-
-    public String getApi_level() {
-        return api_level;
-    }
-
-    public void setApi_level(String api_level) {
-        this.api_level = api_level;
+    public void setAqi_level(int aqi_level) {
+        this.aqi_level = aqi_level;
     }
 
     public String getHour() {

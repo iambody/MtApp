@@ -16,6 +16,7 @@ public class BHome extends BBase {
     private String aqi;//": 40,
     private String aqi_detail;//": "优",
     private List<BAqi> list = new ArrayList<>();
+    private List<BDetail> seven_list = new ArrayList<>();
 
     public String getCount() {
         return count;
@@ -79,5 +80,13 @@ public class BHome extends BBase {
 
     public void setList(List<BAqi> list) {
         this.list = list;
+    }
+
+    public List<BDetail> getSeven_list() {
+        return seven_list;
+    }
+
+    public void setSeven_list(List<BDetail> seven_list) {
+        this.seven_list = seven_list;
     }
 }

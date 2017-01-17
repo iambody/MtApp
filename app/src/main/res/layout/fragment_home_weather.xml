@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_home_out_lay"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <io.vtown.WuMaiApp.view.custom.HomeScrollView
         android:id="@+id/fragment_home_homescrollview"
@@ -17,20 +19,68 @@
             <RelativeLayout
                 android:id="@+id/fragment_up_view_lay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/app_fen1">
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ui_100_dip"
+                    android:background="@color/transparent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/fragment_up_city_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/weather_name_size" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/fragment_up_city_level"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+                            android:paddingRight="@dimen/ui_2_dip"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/weather_level_size" />
+
+                        <TextView
+                            android:id="@+id/fragment_up_city_level_desc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:paddingLeft="@dimen/ui_2_dip"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/weather_level_des_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
 
                 <io.vtown.WuMaiApp.view.custom.CustHScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/white"
+                    android:background="@color/transparent"
                     android:scrollbars="none">
 
                     <LinearLayout
                         android:id="@+id/fragment_hscrollview_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/transparent"
                         android:orientation="horizontal">
 
 
@@ -39,14 +89,23 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="@color/white"
-                android:text="sada" />
+
             <!-- 上边的布局****************** -->
+            <!-- 下边的列表 -->
+            <io.vtown.WuMaiApp.view.custom.CompleteListView
+                android:id="@+id/fragment_down_detail_ls"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/transparent"
+                android:dividerHeight="@dimen/ui_10_dip"
+                android:paddingTop="@dimen/ui_20_dip"
+                android:scrollbars="none" />
+            <!-- 下边的列表 -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
         </LinearLayout>
 
 
     </io.vtown.WuMaiApp.view.custom.HomeScrollView>
-</RelativeLayout>
+</LinearLayout>

@@ -10,9 +10,9 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,11 +53,18 @@ public class ANewHome extends ABase {
     ImageView newhomeShareBt;
     @Bind(R.id.newhome_title_up_lay)
     LinearLayout newhomeTitleUpLay;
+    @Bind(R.id.newhome_out_lay)
+    RelativeLayout newhomeOutLay;
+
 
 
     private List<FHome> FragmentLs = new ArrayList<>();
     private FragmentPagerAdapter fragmentPagerAdapter;
     private FHome Citydefault;
+
+    //当前所在的fragment的数据
+    private BHome CurrentHome;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,29 +73,25 @@ public class ANewHome extends ABase {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         IBase();
-        IData();
+Test();
     }
 
-    private void IData() {
-        /**
-         *  一般情况下第一次进来需要请求数据
-         *  之后进来先显示缓存数据在偷偷刷新即可
-         */
-        NetHomeData("101010100");
+    private void Test() {
     }
 
 
     private void IBase() {
-        Citydefault = SetScreeSize(new FHome());
+        Citydefault = SetScreeSize(new FHome(), "101010100");
         FragmentLs.add(Citydefault);
         fragmentPagerAdapter = new MyViewPage(getSupportFragmentManager());
         newhomeViewpage.setAdapter(fragmentPagerAdapter);
     }
 
-    private FHome SetScreeSize(FHome f) {
+    private FHome SetScreeSize(FHome f, String CityCode) {
         Bundle mybudl = new Bundle();
         mybudl.putInt("screenWidth", screenWidth);
         mybudl.putInt("screenHeight", screenHeight);
+        mybudl.putString("citycode", CityCode);
         f.setArguments(mybudl);
         return f;
     }
@@ -97,7 +100,7 @@ public class ANewHome extends ABase {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.newhome_city_bt:
-                PromptManager.SkipActivity1(BaseActiviy,new Intent(BaseActiviy,ACitys.class));
+                PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, ACitys.class));
                 break;
             case R.id.newhome_share_bt:
                 break;
@@ -129,17 +132,24 @@ public class ANewHome extends ABase {
     public void ReciveMessage(BMessage message) {
         switch (message.getTage_Message()) {
             case BMessage.Tage_HomeScrollY:
+
                 int ScrollY = message.getHomeScrollY();
                 if (ScrollY < 20) {
                     newhomeTitleUpLay.getBackground().mutate().setAlpha(0);
                     newhomeTitleUpLay.setVisibility(View.GONE);
+
                 } else if (ScrollY >= 20 && ScrollY < 256) {//860
                     newhomeTitleUpLay.getBackground().mutate().setAlpha((ScrollY));//scrollY-100
                     newhomeTitleUpLay.setVisibility(View.VISIBLE);
+
                 } else {
                     newhomeTitleUpLay.getBackground().mutate().setAlpha(255);
                     newhomeTitleUpLay.setVisibility(View.VISIBLE);
                 }
+                break;
+            case BMessage.Tage_F_To_Home_Data:
+                CurrentHome = message.getMyBHome();
+                StrUtils.SetTxt(newhomeCityTitle, "北京-" + CurrentHome.getAqi_detail());
                 break;
         }
 
@@ -167,27 +177,27 @@ public class ANewHome extends ABase {
     /**
      * 获取首页数据
      */
-    private void NetHomeData(String CityId) {
-        NHttpBaseStr BaNHttpBaseStr = new NHttpBaseStr(BaseContext);
-        BaNHttpBaseStr.setPostResult(new IHttpResult<String>() {
-            @Override
-            public void getResult(int Code, String Msg, String Data) {
-                if (!StrUtils.isEmpty(Data)) {
-
-                    IFrashData(JSON.parseObject(Data, BHome.class));
-                }
-            }
-
-            @Override
-            public void onError(String error, int LoadType) {
-                PromptManager.ShowCustomToast(BaseContext, error);
-            }
-        });
-        HashMap<String, String> map = new HashMap<>();
-        map.put("areaid", CityId);
-
-        BaNHttpBaseStr.getData(Constans.GetCityTodyData, map, Request.Method.GET);
-    }
+//    private void NetHomeData(String CityId) {
+//        NHttpBaseStr BaNHttpBaseStr = new NHttpBaseStr(BaseContext);
+//        BaNHttpBaseStr.setPostResult(new IHttpResult<String>() {
+//            @Override
+//            public void getResult(int Code, String Msg, String Data) {
+//                if (!StrUtils.isEmpty(Data)) {
+//
+//                    IFrashData(JSON.parseObject(Data, BHome.class));
+//                }
+//            }
+//
+//            @Override
+//            public void onError(String error, int LoadType) {
+//                PromptManager.ShowCustomToast(BaseContext, error);
+//            }
+//        });
+//        HashMap<String, String> map = new HashMap<>();
+//        map.put("areaid", CityId);
+//
+//        BaNHttpBaseStr.getData(Constans.GetCityTodyData, map, Request.Method.GET);
+//    }
 
     /**
      * 获取数据后进行刷新数据

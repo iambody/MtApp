@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent5"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_fragment_detail_up_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/ui_15_dip"
+        android:padding="@dimen/ui_10_dip"
+        android:textColor="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <ImageView style="@style/line_up" />
+
+        <include
+            android:id="@+id/item_fragment_detail_v1"
+            layout="@layout/comment_item_fragment_detail_view" />
+
+        <ImageView style="@style/line_up" />
+
+        <include
+            android:id="@+id/item_fragment_detail_v2"
+            layout="@layout/comment_item_fragment_detail_view" />
+
+        <ImageView style="@style/line_up" />
+
+        <include
+            android:id="@+id/item_fragment_detail_v3"
+            layout="@layout/comment_item_fragment_detail_view" />
+
+        <ImageView style="@style/line_up" />
+
+        <include
+            android:id="@+id/item_fragment_detail_v4"
+            layout="@layout/comment_item_fragment_detail_view" />
+
+        <ImageView style="@style/line_up" />
+
+        <include
+            android:id="@+id/item_fragment_detail_v5"
+            layout="@layout/comment_item_fragment_detail_view" />
+
+        <ImageView style="@style/line_up" />
+
+        <include
+            android:id="@+id/item_fragment_detail_v6"
+            layout="@layout/comment_item_fragment_detail_view" />
+
+        <ImageView style="@style/line_up" />
+
+        <include
+            android:id="@+id/item_fragment_detail_v7"
+            layout="@layout/comment_item_fragment_detail_view" />
+
+        <ImageView style="@style/line_up" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>

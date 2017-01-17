@@ -7,6 +7,8 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.interf.IDialogResult;
@@ -77,4 +79,29 @@ public class ABase extends AppCompatActivity {
 
     }
 
+    public void SetLevelIv(int Level, RelativeLayout IV) {
+        switch (Level) {
+            case 0:
+                IV.setBackgroundResource(R.mipmap.home_bg1);
+                break;
+            case 1:
+                IV.setBackgroundResource(R.mipmap.home_bg2);
+                break;
+            case 2:
+                IV.setBackgroundResource(R.mipmap.home_bg3);
+                break;
+            case 3:
+                IV.setBackgroundResource(R.mipmap.home_bg4);
+                break;
+            case 4:
+                IV.setBackgroundResource(R.mipmap.home_bg5);
+                break;
+            case 5:
+                IV.setBackgroundResource(R.mipmap.home_bg6);
+                break;
+            case 6:
+                IV.setBackgroundResource(R.mipmap.home_bg7);
+                break;
+        }
+    }
 }
