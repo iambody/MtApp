@@ -98,6 +98,8 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 etInput.setSelection(text.length());
                 lvTips.setVisibility(View.GONE);
                 notifyStartSearching(text);
+                lvTips.setVisibility(GONE);
+                //notifyStartSearching(etInput.getText().toString());
             }
         });
 
@@ -114,6 +116,14 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                     notifyStartSearching(etInput.getText().toString());
                 }
                 return true;
+            }
+        });
+        //搜索图标
+        iv_search.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lvTips.setVisibility(GONE);
+                notifyStartSearching(etInput.getText().toString());
             }
         });
     }

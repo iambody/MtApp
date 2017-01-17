@@ -3,11 +3,16 @@ package io.vtown.WuMaiApp.constant;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.location.BDLocation;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import io.vtown.WuMaiApp.Utilss.StrUtils;
 
 /**
  * Created by datutu on 2017/1/13.
@@ -38,6 +43,10 @@ public class Spuit {
 
 
     private static String Sp_SaveBaiDuLoaction = "baicu_laoction_sp";
+    /*
+    * 保存搜索城市历史记录
+    * */
+    private static String Sp_Save_History_Search = "city_history_search";
 
 
     /**
@@ -80,6 +89,42 @@ public class Spuit {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * 获取搜索城市历史记录
+     *
+     * @param context
+     * @return
+     */
+    public static List<String> Search_City_History_Get(Context context) {
+        List<String> datalist=new ArrayList<String>();
+        SharedPreferences Sp = context.getSharedPreferences(
+                Sp_Save_History_Search, Context.MODE_PRIVATE);
+        String history_search = Sp.getString("history_search", "");
+        if(StrUtils.isEmpty(history_search)){
+            return datalist;
+        }
+         datalist = JSON.parseArray(history_search,String.class);
+        return datalist;
+    }
+
+    /**
+     * 保存搜索城市历史记录
+     *
+     * @param
+     * @param
+     */
+    public static void Search_City_History_Save(Context pcContext,
+                                                   List<String> cache) {
+        SharedPreferences Sp = pcContext.getSharedPreferences(
+                Sp_Save_History_Search, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = Sp.edit();
+        String s = JSON.toJSONString(cache);
+        editor.putString("history_search", s);
+
+        editor.commit();
     }
 
 //    public static void BaiDuMap_Location_Save(Context xx) {

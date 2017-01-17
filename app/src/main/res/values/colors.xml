@@ -183,4 +183,5 @@
     <color name="level5">#72243A</color>
     <color name="level6">#480936</color>
     <color name="level7">#1A0313</color>
+    <color name="item_bg">#fafafa</color>
 </resources>

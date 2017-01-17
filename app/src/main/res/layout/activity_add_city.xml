@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
 
@@ -10,14 +11,86 @@
     android:layout_height="wrap_content"
 
     />
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ListView
         android:visibility="gone"
         android:id="@+id/city_lv_search_results"
         android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="wrap_content">
+        
+
 
     </ListView>
+
+    <LinearLayout
+        android:id="@+id/history_search_layout"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="历史搜索"
+            android:paddingLeft="16dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_size3"
+            android:background="@color/app_gray"
+           />
+
+        <ListView
+            android:visibility="visible"
+            android:id="@+id/city_lv_history_search"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:layout_height="wrap_content">
+
+
+
+        </ListView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_size3"
+            android:background="@color/app_gray"
+            />
+
+        <LinearLayout
+            android:id="@+id/delete_all_history"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="10dp"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingRight="16dp"
+            android:background="@color/item_bg"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/lajixiang_iv"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="清空历史搜索"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+    
+    
+</FrameLayout>
+   
 
 
 
