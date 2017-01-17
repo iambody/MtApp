@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -91,26 +92,30 @@ public class ACitys extends ABase {
         }
 
         @Override
-        public View getItemView(int position, View convertView, ViewGroup parent) {
+        public View getItemView(final int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = LayoutInflater.from(BaseContext).inflate(R.layout.item_drag_list, parent, false);
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) convertView.findViewById(R.id.tv_name_drag_list);
-                viewHolder.desc = (TextView) convertView.findViewById(R.id.tv_desc_drag_list);
+                viewHolder.delete_city = (LinearLayout)convertView.findViewById(R.id.delete_city);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             viewHolder.name.setText(mDragDatas.get(position).getAreaname());
-            String s = mDragDatas.get(position).getAreaname() + "的描述";
-            viewHolder.desc.setText(s);
+            viewHolder.delete_city.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteData(position);
+                }
+            });
             return convertView;
         }
 
         class ViewHolder {
             TextView name;
-            TextView desc;
+            LinearLayout delete_city;
         }
 
     }
@@ -119,7 +124,17 @@ public class ACitys extends ABase {
     public void ReciveMessage(BMessage message) {
        if(BMessage.Tage_Select_City == message.getTage_Message()){
            BLSearchResultCites blSearchResultCites = message.getmCity();
-           mCites.add(blSearchResultCites);
+           if(mCites.size()>0){
+               for (int i=0;i<mCites.size();i++){
+                   if(!mCites.get(i).getAreaname().equals(blSearchResultCites.getAreaname())){
+                       mCites.add(blSearchResultCites);
+                   }
+               }
+           }else{
+               mCites.add(blSearchResultCites);
+           }
+
+
            initView();
        }
             

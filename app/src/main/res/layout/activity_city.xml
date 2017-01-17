@@ -14,31 +14,44 @@
         <LinearLayout
             android:id="@+id/layout_frist_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/aqua"
+            android:layout_height="70dp"
             android:orientation="horizontal"
-            android:padding="20dp">
+            android:gravity="center_vertical"
+            >
 
             <TextView
                 android:id="@+id/tv_name_drag_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="北京" />
+                android:layout_marginLeft="20dp"
+                android:text="北京"
+                android:padding="20dp"
+                android:textSize="25sp"
+                />
 
-            <TextView
-                android:id="@+id/tv_desc_drag_list"
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="天安门" />
+                android:src="@drawable/address_iv"
+                android:layout_height="wrap_content" />
+
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/linenn"
+            android:layout_width="match_parent"
+            android:background="@color/app_gray"
+            android:layout_marginLeft="42dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@+id/layout_frist_item"
+            android:layout_height="@dimen/line_size3"/>
 
         <io.vtown.WuMaiApp.view.custom.DragListView
             android:id="@+id/dvl_drag_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_frist_item"
+            android:layout_below="@+id/linenn"
+            android:divider="@null"
             android:scrollbars="none"
 
             />
