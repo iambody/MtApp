@@ -7,54 +7,53 @@
     <include layout="@layout/title_bar" />
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="match_parent">
-           <io.vtown.WuMaiApp.view.custom.DragListView
-               android:id="@+id/dvl_drag_list"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/layout_frist_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/aqua"
+            android:orientation="horizontal"
+            android:padding="20dp">
 
-               />
+            <TextView
+                android:id="@+id/tv_name_drag_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="北京" />
 
-           <ImageView
-               android:id="@+id/iv_add_city"
-               android:layout_width="wrap_content"
-               android:src="@drawable/error"
-               android:layout_alignParentBottom="true"
-               android:layout_centerInParent="true"
-               android:layout_marginBottom="16dp"
-               android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_desc_drag_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="天安门" />
 
-
-       </RelativeLayout>
-
-
-
-
-
+        </LinearLayout>
 
 
+        <io.vtown.WuMaiApp.view.custom.DragListView
+            android:id="@+id/dvl_drag_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_frist_item"
+            android:scrollbars="none"
+
+            />
+
+        <ImageView
+            android:id="@+id/iv_add_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/error" />
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </RelativeLayout>
 
 
 </LinearLayout>

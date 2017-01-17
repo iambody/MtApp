@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.vtown.WuMaiApp.Utilss.StrUtils;
+import io.vtown.WuMaiApp.module.cites.BLSearchResultCites;
 
 /**
  * Created by datutu on 2017/1/13.
@@ -47,6 +48,11 @@ public class Spuit {
     * 保存搜索城市历史记录
     * */
     private static String Sp_Save_History_Search = "city_history_search";
+
+    /*
+    * 保存城市数据
+    * */
+    private static final String Sp_Save_City = "save_city";
 
 
     /**
@@ -123,6 +129,42 @@ public class Spuit {
         SharedPreferences.Editor editor = Sp.edit();
         String s = JSON.toJSONString(cache);
         editor.putString("history_search", s);
+
+        editor.commit();
+    }
+
+
+    /**
+     * 获取搜索城市历史记录
+     *
+     * @param context
+     * @return
+     */
+    public static List<BLSearchResultCites> Location_City_Get(Context context) {
+        List<BLSearchResultCites> datalist=new ArrayList<BLSearchResultCites>();
+        SharedPreferences Sp = context.getSharedPreferences(
+                Sp_Save_City, Context.MODE_PRIVATE);
+        String history_search = Sp.getString("locationcity", "");
+        if(StrUtils.isEmpty(history_search)){
+            return datalist;
+        }
+        datalist = JSON.parseArray(history_search,BLSearchResultCites.class);
+        return datalist;
+    }
+
+    /**
+     * 保存搜索城市历史记录
+     *
+     * @param
+     * @param
+     */
+    public static void Location_City_Save(Context pcContext,
+                                                List<BLSearchResultCites> cache) {
+        SharedPreferences Sp = pcContext.getSharedPreferences(
+                Sp_Save_City, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = Sp.edit();
+        String s = JSON.toJSONString(cache);
+        editor.putString("locationcity", s);
 
         editor.commit();
     }

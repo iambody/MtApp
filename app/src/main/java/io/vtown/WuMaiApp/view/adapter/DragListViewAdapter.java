@@ -8,12 +8,14 @@ import android.widget.BaseAdapter;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class DragListViewAdapter<T> extends BaseAdapter {
+import io.vtown.WuMaiApp.module.cites.BLSearchResultCites;
+
+public abstract class DragListViewAdapter extends BaseAdapter {
 
     public Context mContext;
-    public List<T> mDragDatas;
+    public List<BLSearchResultCites> mDragDatas;
 
-    public DragListViewAdapter(Context context, List<T> dataList){
+    public DragListViewAdapter(Context context, List<BLSearchResultCites> dataList){
         this.mContext = context;
         this.mDragDatas = dataList;
     }
@@ -24,7 +26,7 @@ public abstract class DragListViewAdapter<T> extends BaseAdapter {
     }
 
     @Override
-    public T getItem(int position) {
+    public BLSearchResultCites getItem(int position) {
         return mDragDatas.get(position);
     }
 
@@ -42,7 +44,12 @@ public abstract class DragListViewAdapter<T> extends BaseAdapter {
 
     public void swapData(int from, int to){
         Collections.swap(mDragDatas, from, to);
+
         notifyDataSetChanged();
+    }
+
+    public List<BLSearchResultCites> getData(){
+        return this.mDragDatas;
     }
 
     public void deleteData(int position) {

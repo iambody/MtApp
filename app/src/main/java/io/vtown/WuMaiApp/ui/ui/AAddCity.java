@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,7 @@ import io.vtown.WuMaiApp.constant.Constans;
 import io.vtown.WuMaiApp.constant.PromptManager;
 import io.vtown.WuMaiApp.constant.Spuit;
 import io.vtown.WuMaiApp.interf.IHttpResult;
+import io.vtown.WuMaiApp.module.BMessage;
 import io.vtown.WuMaiApp.module.cites.BLSearchResultCites;
 import io.vtown.WuMaiApp.ui.ABase;
 import io.vtown.WuMaiApp.view.custom.SearchView;
@@ -87,6 +90,7 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_city);
         ButterKnife.bind(this);
+
         initData();
         initView();
     }
@@ -103,8 +107,11 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 BLSearchResultCites item = (BLSearchResultCites) resultAdapter.getItem(position);
-
+                BMessage message = new BMessage(BMessage.Tage_Select_City);
+                message.setmCity(item);
+                EventBus.getDefault().post(message);
                 Toast.makeText(BaseContext, position + "", Toast.LENGTH_SHORT).show();
+                AAddCity.this.finish();
             }
         });
     }
