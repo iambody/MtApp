@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.vtown.WuMaiApp.Net.vollynet.NHttpBaseStr;
 import io.vtown.WuMaiApp.R;
+import io.vtown.WuMaiApp.Utilss.SaveBitMapUtiils;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
 import io.vtown.WuMaiApp.constant.Constans;
 import io.vtown.WuMaiApp.constant.PromptManager;
@@ -36,6 +38,7 @@ import io.vtown.WuMaiApp.interf.IHttpResult;
 import io.vtown.WuMaiApp.module.BHome;
 import io.vtown.WuMaiApp.module.BMessage;
 import io.vtown.WuMaiApp.ui.ABase;
+import io.vtown.WuMaiApp.view.Xcircleindicator;
 
 
 /**
@@ -55,7 +58,8 @@ public class ANewHome extends ABase {
     LinearLayout newhomeTitleUpLay;
     @Bind(R.id.newhome_out_lay)
     RelativeLayout newhomeOutLay;
-
+    @Bind(R.id.newhome_circleindicator)
+    Xcircleindicator newhomeCircleindicator;
 
 
     private List<FHome> FragmentLs = new ArrayList<>();
@@ -73,18 +77,35 @@ public class ANewHome extends ABase {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         IBase();
-Test();
-    }
 
-    private void Test() {
     }
 
 
     private void IBase() {
         Citydefault = SetScreeSize(new FHome(), "101010100");
         FragmentLs.add(Citydefault);
+        FragmentLs.add(SetScreeSize(new FHome(), "101181601"));
         fragmentPagerAdapter = new MyViewPage(getSupportFragmentManager());
         newhomeViewpage.setAdapter(fragmentPagerAdapter);
+        newhomeCircleindicator.initData(FragmentLs.size(), 0);
+        //设置当前的页面
+        newhomeCircleindicator.setCurrentPage(0);
+        newhomeViewpage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                newhomeCircleindicator.setCurrentPage(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private FHome SetScreeSize(FHome f, String CityCode) {
@@ -150,6 +171,7 @@ Test();
             case BMessage.Tage_F_To_Home_Data:
                 CurrentHome = message.getMyBHome();
                 StrUtils.SetTxt(newhomeCityTitle, "北京-" + CurrentHome.getAqi_detail());
+
                 break;
         }
 
@@ -203,11 +225,11 @@ Test();
      * 获取数据后进行刷新数据
      */
 
-    private void IFrashData(BHome myHome) {
-        FragmentLs.get(0).FrashView(myHome);
-
-
-    }
+//    private void IFrashData(BHome myHome) {
+//        FragmentLs.get(0).FrashView(myHome);
+//
+//
+//    }
 
     @Override
     protected void onDestroy() {

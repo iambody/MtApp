@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:indicator="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newhome_out_lay"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/newhome_out_lay">
+    android:layout_height="match_parent">
 
 
     <android.support.v4.view.ViewPager
@@ -43,4 +45,15 @@
             android:src="@mipmap/newhome_up_share_iv" />
     </LinearLayout>
 
+    <io.vtown.WuMaiApp.view.Xcircleindicator
+        android:id="@+id/newhome_circleindicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newhome_title_up_lay"
+        android:layout_centerHorizontal="true"
+        indicator:circleInterval="10dp"
+        indicator:fillColor="@color/white"
+        indicator:radius="5dp"
+        indicator:strokeColor="@color/app_gray"
+        android:layout_marginTop="@dimen/ui_10_dip"/>
 </RelativeLayout>

@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import io.vtown.WuMaiApp.Net.vollynet.NHttpBaseStr;
 import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.Utilss.DimensionPixelUtil;
+import io.vtown.WuMaiApp.Utilss.SaveBitMapUtiils;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
 import io.vtown.WuMaiApp.constant.Constans;
 import io.vtown.WuMaiApp.constant.PromptManager;
@@ -92,11 +93,11 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
         fragmentDownDetailLs.setAdapter(myFragHomeAp);
         //开始刷新数据
         NetHomeData(CityCode, true);
-        fragmentHomeHomescrollview.smoothScrollTo(0,20);
+        fragmentHomeHomescrollview.smoothScrollTo(0,-20);
     }
 
-    public void FrashView(BHome home) {
-        fragmentHomeHomescrollview.smoothScrollTo(0,20);
+    public void FrashHSView(BHome home) {
+        fragmentHomeHomescrollview.smoothScrollTo(0,-20);
         for (int i = 0; i < home.getList().size(); i++) {
             BAqi MyAqi = home.getList().get(i);
             View ItemView = LayoutInflater.from(FBaseActivity).inflate(R.layout.item_home_hscrollview, null);
@@ -113,7 +114,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
 
     @Override
     protected void onUserVisible() {
-
+        fragmentHomeHomescrollview.smoothScrollTo(0,-20);
     }
 
     @Override
@@ -149,12 +150,14 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
         fragmentUpCityName.setText("北京朝阳区");
         fragmentUpCityLevel.setText(bHome.getAqi() + "");
         fragmentUpCityLevelDesc.setText(bHome.getAqi_detail());
-        FrashView(bHome);
+        FrashHSView(bHome);
         SetLevelIv(bHome.getAqi_level(), fragmentHomeOutLay);
         myFragHomeAp.FrashData(bHome.getSeven_list());
         BMessage message=new BMessage(BMessage.Tage_F_To_Home_Data);
         message.setMyBHome(bHome);
         EventBus.getDefault().post(message);
+
+//        SaveBitMapUtiils.SaveBitMap(fragmentUpViewLay);
     }
 
     /**
