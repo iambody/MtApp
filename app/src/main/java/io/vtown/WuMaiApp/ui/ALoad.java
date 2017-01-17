@@ -33,8 +33,8 @@ public class ALoad extends ABase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aload);
         ButterKnife.bind(this);
-        startActivity(new Intent(ALoad.this, ANewHome.class));
-
+        startActivity(new Intent(ALoad.this, ANewHome.class).putExtra(ANewHome.Tag_CityName, "北京市"));
+        BaseActiviy.finish();
     }
 
     private void ISplash() {

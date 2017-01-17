@@ -119,7 +119,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
 
     @Override
     protected void onUserInvisible() {
-
+        fragmentHomeHomescrollview.smoothScrollTo(0,-20);
     }
 
     @Override

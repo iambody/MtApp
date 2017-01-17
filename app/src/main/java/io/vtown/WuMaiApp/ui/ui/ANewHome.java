@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,10 +34,12 @@ import io.vtown.WuMaiApp.Utilss.SaveBitMapUtiils;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
 import io.vtown.WuMaiApp.constant.Constans;
 import io.vtown.WuMaiApp.constant.PromptManager;
+import io.vtown.WuMaiApp.constant.Spuit;
 import io.vtown.WuMaiApp.fragment.FHome;
 import io.vtown.WuMaiApp.interf.IHttpResult;
 import io.vtown.WuMaiApp.module.BHome;
 import io.vtown.WuMaiApp.module.BMessage;
+import io.vtown.WuMaiApp.module.cites.BLSearchResultCites;
 import io.vtown.WuMaiApp.ui.ABase;
 import io.vtown.WuMaiApp.view.Xcircleindicator;
 
@@ -61,14 +64,19 @@ public class ANewHome extends ABase {
     @Bind(R.id.newhome_circleindicator)
     Xcircleindicator newhomeCircleindicator;
 
+    public static final String Tag_CityName = "tagcity";
+    private String GetCityName;
+    private String GetCityCode;
+
 
     private List<FHome> FragmentLs = new ArrayList<>();
     private FragmentPagerAdapter fragmentPagerAdapter;
-    private FHome Citydefault;
 
     //当前所在的fragment的数据
     private BHome CurrentHome;
-
+    private List<BLSearchResultCites> Citys = new ArrayList<>();
+    //当前的位置
+    private int CurrentPostion = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,20 +84,38 @@ public class ANewHome extends ABase {
         setContentView(R.layout.activity_newhome);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        IBase();
+        IBund();
+
+
+    }
+
+    private void IBund() {
+        GetCityName = getIntent().getStringExtra(Tag_CityName);
+        if (Spuit.BaiDuMap_Location_Get(BaseActiviy) != null) {
+            GetCityName = Spuit.BaiDuMap_Location_Get(BaseActiviy).getAreaname();
+            GetCityCode = Spuit.BaiDuMap_Location_Get(BaseActiviy).getAreaid();
+            Citys = Spuit.AllCity_Get(BaseActiviy);
+            IBase();
+        } else {
+            IGetCityCode(GetCityName);
+        }
+
 
     }
 
 
     private void IBase() {
-        Citydefault = SetScreeSize(new FHome(), "101010100");
-        FragmentLs.add(Citydefault);
-        FragmentLs.add(SetScreeSize(new FHome(), "101181601"));
+        for (int i = 0; i < Citys.size(); i++) {
+            BLSearchResultCites data = Citys.get(i);
+            FHome MyFhome = SetScreeSize(new FHome(), data.getAreaid(), data.getAreaname());
+            FragmentLs.add(MyFhome);
+        }
+
         fragmentPagerAdapter = new MyViewPage(getSupportFragmentManager());
         newhomeViewpage.setAdapter(fragmentPagerAdapter);
-        newhomeCircleindicator.initData(FragmentLs.size(), 0);
+        newhomeCircleindicator.initData(FragmentLs.size(), CurrentPostion);
         //设置当前的页面
-        newhomeCircleindicator.setCurrentPage(0);
+        newhomeCircleindicator.setCurrentPage(CurrentPostion);
         newhomeViewpage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -98,7 +124,8 @@ public class ANewHome extends ABase {
 
             @Override
             public void onPageSelected(int position) {
-                newhomeCircleindicator.setCurrentPage(position);
+                CurrentPostion = position;
+                newhomeCircleindicator.setCurrentPage(CurrentPostion);
             }
 
             @Override
@@ -108,11 +135,12 @@ public class ANewHome extends ABase {
         });
     }
 
-    private FHome SetScreeSize(FHome f, String CityCode) {
+    private FHome SetScreeSize(FHome f, String CityCode, String CityName) {
         Bundle mybudl = new Bundle();
         mybudl.putInt("screenWidth", screenWidth);
         mybudl.putInt("screenHeight", screenHeight);
         mybudl.putString("citycode", CityCode);
+        mybudl.putString("cityname", CityName);
         f.setArguments(mybudl);
         return f;
     }
@@ -177,17 +205,25 @@ public class ANewHome extends ABase {
 
     }
 
-    private void IGetCityCode(String cityName) {
+    private void IGetCityCode(final String cityName) {
+        PromptManager.showLoading(BaseContext);
         NHttpBaseStr BaNHttpBaseStr = new NHttpBaseStr(BaseContext);
         BaNHttpBaseStr.setPostResult(new IHttpResult<String>() {
             @Override
             public void getResult(int Code, String Msg, String Data) {
-                PromptManager.ShowCustomToast(BaseContext, Data);
+                if (!StrUtils.isEmpty(Data)) {
+                    List<BLSearchResultCites> ls = JSON.parseArray(Data, BLSearchResultCites.class);
+                    GetCityCode = ls.get(0).getAreaid();
+                    Citys.add(new BLSearchResultCites(GetCityName, GetCityCode));
+                    Spuit.BaiDuMap_Location_Save(BaseContext, new BLSearchResultCites(GetCityName, GetCityCode));
+                    IBase();
+                }
             }
 
             @Override
             public void onError(String error, int LoadType) {
                 PromptManager.ShowCustomToast(BaseContext, error);
+                IGetCityCode(cityName);
             }
         });
         HashMap<String, String> map = new HashMap<>();
@@ -195,41 +231,6 @@ public class ANewHome extends ABase {
         map.put("count", "1");
         BaNHttpBaseStr.getData(Constans.GetCityId, map, Request.Method.GET);
     }
-
-    /**
-     * 获取首页数据
-     */
-//    private void NetHomeData(String CityId) {
-//        NHttpBaseStr BaNHttpBaseStr = new NHttpBaseStr(BaseContext);
-//        BaNHttpBaseStr.setPostResult(new IHttpResult<String>() {
-//            @Override
-//            public void getResult(int Code, String Msg, String Data) {
-//                if (!StrUtils.isEmpty(Data)) {
-//
-//                    IFrashData(JSON.parseObject(Data, BHome.class));
-//                }
-//            }
-//
-//            @Override
-//            public void onError(String error, int LoadType) {
-//                PromptManager.ShowCustomToast(BaseContext, error);
-//            }
-//        });
-//        HashMap<String, String> map = new HashMap<>();
-//        map.put("areaid", CityId);
-//
-//        BaNHttpBaseStr.getData(Constans.GetCityTodyData, map, Request.Method.GET);
-//    }
-
-    /**
-     * 获取数据后进行刷新数据
-     */
-
-//    private void IFrashData(BHome myHome) {
-//        FragmentLs.get(0).FrashView(myHome);
-//
-//
-//    }
 
     @Override
     protected void onDestroy() {

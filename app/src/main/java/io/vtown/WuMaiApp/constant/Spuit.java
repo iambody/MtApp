@@ -57,46 +57,35 @@ public class Spuit {
 
     /**
      * 先保存第一次定位的城市
-     *
-     * @param xx
-     * @param MapLocation
      */
-    public static void BaiDuMap_Location_Save(Context xx, BDLocation MapLocation) {
+    public static void BaiDuMap_Location_Save(Context xx, BLSearchResultCites MapLocation) {
         SharedPreferences sp = xx.getSharedPreferences(Sp_SaveBaiDuLoaction,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        Class<? extends BDLocation> clazz = MapLocation.getClass();
-        Field[] arrFiled = clazz.getDeclaredFields();
-        try {
-            for (Field f : arrFiled) {
-                int type = TYPES.get(f.getType());
-                switch (type) {
-                    case CLZ_BYTE:
-                    case CLZ_SHORT:
-                    case CLZ_INTEGER:
-                        editor.putInt(f.getName(), f.getInt(MapLocation));
-                        break;
-                    case CLZ_LONG:
-                        editor.putLong(f.getName(), f.getLong(MapLocation));
-                        break;
-                    case CLZ_STRING:
-                        editor.putString(f.getName(), (String) f.get(MapLocation));
-                        break;
-
-                    case CLZ_BOOLEAN:
-                        editor.putBoolean(f.getName(), f.getBoolean(MapLocation));
-                        break;
-                }
-            }
-            editor.commit();
-        } catch (
-                IllegalArgumentException e
-                ) {
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        editor.putString("map_location", MapLocation.toString());
+        editor.commit();
     }
 
+    /**
+     * 获取第一个定位的城市
+     */
+    public static BLSearchResultCites BaiDuMap_Location_Get(Context xx) {
+        SharedPreferences sp = xx.getSharedPreferences(Sp_SaveBaiDuLoaction,
+                Context.MODE_PRIVATE);
+        String Str = sp.getString("map_location", null);
+        if (StrUtils.isEmpty(Str)) return null;
+        return JSON.parseObject(Str, BLSearchResultCites.class);
+    }
+
+    /**
+     * 获取所有的城市列表
+     */
+    public static List<BLSearchResultCites> AllCity_Get(Context XX) {
+        List<BLSearchResultCites> alldatas = new ArrayList<>();
+        alldatas.add(BaiDuMap_Location_Get(XX));
+        alldatas.addAll(Location_City_Get(XX));
+        return alldatas;
+    }
 
     /**
      * 获取搜索城市历史记录
@@ -105,14 +94,14 @@ public class Spuit {
      * @return
      */
     public static List<String> Search_City_History_Get(Context context) {
-        List<String> datalist=new ArrayList<String>();
+        List<String> datalist = new ArrayList<String>();
         SharedPreferences Sp = context.getSharedPreferences(
                 Sp_Save_History_Search, Context.MODE_PRIVATE);
         String history_search = Sp.getString("history_search", "");
-        if(StrUtils.isEmpty(history_search)){
+        if (StrUtils.isEmpty(history_search)) {
             return datalist;
         }
-         datalist = JSON.parseArray(history_search,String.class);
+        datalist = JSON.parseArray(history_search, String.class);
         return datalist;
     }
 
@@ -123,7 +112,7 @@ public class Spuit {
      * @param
      */
     public static void Search_City_History_Save(Context pcContext,
-                                                   List<String> cache) {
+                                                List<String> cache) {
         SharedPreferences Sp = pcContext.getSharedPreferences(
                 Sp_Save_History_Search, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = Sp.edit();
@@ -141,14 +130,14 @@ public class Spuit {
      * @return
      */
     public static List<BLSearchResultCites> Location_City_Get(Context context) {
-        List<BLSearchResultCites> datalist=new ArrayList<BLSearchResultCites>();
+        List<BLSearchResultCites> datalist = new ArrayList<BLSearchResultCites>();
         SharedPreferences Sp = context.getSharedPreferences(
                 Sp_Save_City, Context.MODE_PRIVATE);
         String history_search = Sp.getString("locationcity", "");
-        if(StrUtils.isEmpty(history_search)){
+        if (StrUtils.isEmpty(history_search)) {
             return datalist;
         }
-        datalist = JSON.parseArray(history_search,BLSearchResultCites.class);
+        datalist = JSON.parseArray(history_search, BLSearchResultCites.class);
         return datalist;
     }
 
@@ -159,7 +148,7 @@ public class Spuit {
      * @param
      */
     public static void Location_City_Save(Context pcContext,
-                                                List<BLSearchResultCites> cache) {
+                                          List<BLSearchResultCites> cache) {
         SharedPreferences Sp = pcContext.getSharedPreferences(
                 Sp_Save_City, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = Sp.edit();
@@ -169,43 +158,5 @@ public class Spuit {
         editor.commit();
     }
 
-//    public static void BaiDuMap_Location_Save(Context xx) {
-//
-//        SharedPreferences sp = xx.getSharedPreferences(Sp_SaveBaiDuLoaction,
-//                Context.MODE_PRIVATE);
-//        BDLocation BLocation = new BDLocation();
-//
-//        Class<? extends BDLocation> clazz = BLocation.getClass();
-//        Field[] arrFiled = clazz.getDeclaredFields();
-//        try {
-//            for (Field f : arrFiled) {
-////                String str = sp.getString(f.getName(), null);
-////                f.set(mBUser, str);
-//                int type = TYPES.get(f.getType());
-//                switch (type) {
-//                    case CLZ_BYTE:
-//                    case CLZ_SHORT:
-//                    case CLZ_INTEGER:
-//                        int str = sp.getInt(f.getName(), 0);
-//                        f.set(BLocation, str);
-//                        break;
-//                    case CLZ_LONG:
-//
-//                        break;
-//                    case CLZ_STRING:
-//
-//                        break;
-//
-//                    case CLZ_BOOLEAN:
-//
-//                        break;
-//                }
-//
-//
-//            }
-//        } catch (IllegalArgumentException e) {
-//        }
-//
-//    }
 
 }
