@@ -30,6 +30,7 @@ import io.vtown.WuMaiApp.Utilss.SaveBitMapUtiils;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
 import io.vtown.WuMaiApp.constant.Constans;
 import io.vtown.WuMaiApp.constant.PromptManager;
+import io.vtown.WuMaiApp.constant.Spuit;
 import io.vtown.WuMaiApp.interf.IHttpResult;
 import io.vtown.WuMaiApp.module.BAqi;
 import io.vtown.WuMaiApp.module.BDetail;
@@ -61,6 +62,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
     TextView fragmentUpCityLevelDesc;
 
     private String CityCode;
+    private String CityName;
 
     private MyFragHomeAp myFragHomeAp;
 
@@ -68,6 +70,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
     protected void create(Bundle Mybundle) {
 //        citycode
         CityCode = Mybundle.getString("citycode");
+        CityName = Mybundle.getString("cityname");
     }
 
     @Override
@@ -82,22 +85,30 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
 
     @Override
     protected void onFirstUserVisible() {
-        IbaseView();
+        IbaseView(); //开始刷新数据
+        if (StrUtils.isEmpty(Spuit.CityDetail_Get(CityCode, FBaseActivity))) {//没有缓存
+            NetHomeData(CityCode, true);
+        } else {//有缓存
+            IFrashData(JSON.parseObject(Spuit.CityDetail_Get(CityCode, FBaseActivity), BHome.class));
+            NetHomeData(CityCode, false);
+        }
     }
 
     private void IbaseView() {
+
+
         fragmentHomeHomescrollview.setScrolListener(this);
         LinearLayout.LayoutParams inps = new LinearLayout.LayoutParams(screenWidth, screenHeight - DimensionPixelUtil.dip2px(FBaseActivity, 26));
         fragmentUpViewLay.setLayoutParams(inps);
-        myFragHomeAp=new MyFragHomeAp();
+        myFragHomeAp = new MyFragHomeAp();
         fragmentDownDetailLs.setAdapter(myFragHomeAp);
-        //开始刷新数据
-        NetHomeData(CityCode, true);
-        fragmentHomeHomescrollview.smoothScrollTo(0,-20);
+
+
+        fragmentHomeHomescrollview.smoothScrollTo(0, 0);
     }
 
     public void FrashHSView(BHome home) {
-        fragmentHomeHomescrollview.smoothScrollTo(0,-20);
+        fragmentHomeHomescrollview.smoothScrollTo(0, 0);
         for (int i = 0; i < home.getList().size(); i++) {
             BAqi MyAqi = home.getList().get(i);
             View ItemView = LayoutInflater.from(FBaseActivity).inflate(R.layout.item_home_hscrollview, null);
@@ -114,12 +125,12 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
 
     @Override
     protected void onUserVisible() {
-        fragmentHomeHomescrollview.smoothScrollTo(0,-20);
+
     }
 
     @Override
     protected void onUserInvisible() {
-        fragmentHomeHomescrollview.smoothScrollTo(0,-20);
+
     }
 
     @Override
@@ -147,13 +158,14 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
      * @param bHome
      */
     private void IFrashData(BHome bHome) {
-        fragmentUpCityName.setText("北京朝阳区");
+//        fragmentUpCityName.setText(CityName);
+        StrUtils.SetTxt(fragmentUpCityName, CityName);
         fragmentUpCityLevel.setText(bHome.getAqi() + "");
         fragmentUpCityLevelDesc.setText(bHome.getAqi_detail());
         FrashHSView(bHome);
         SetLevelIv(bHome.getAqi_level(), fragmentHomeOutLay);
         myFragHomeAp.FrashData(bHome.getSeven_list());
-        BMessage message=new BMessage(BMessage.Tage_F_To_Home_Data);
+        BMessage message = new BMessage(BMessage.Tage_F_To_Home_Data);
         message.setMyBHome(bHome);
         EventBus.getDefault().post(message);
 
@@ -170,7 +182,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
             @Override
             public void getResult(int Code, String Msg, String Data) {
                 if (!StrUtils.isEmpty(Data)) {
-
+                    Spuit.CityDetail_Save(CityCode, Data, FBaseActivity);
                     IFrashData(JSON.parseObject(Data, BHome.class));
                 }
             }
@@ -231,13 +243,13 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
             }
             BDetail ItemData = DownDatas.get(position);
             StrUtils.SetTxt(myItem.item_fragment_detail_up_txt, ItemData.getDate());
-            ItemEightData(ItemData,0,myItem.item_fragment_detail_v1);
-            ItemEightData(ItemData,1,myItem.item_fragment_detail_v2);
-            ItemEightData(ItemData,2,myItem.item_fragment_detail_v3);
-            ItemEightData(ItemData,3,myItem.item_fragment_detail_v4);
-            ItemEightData(ItemData,4,myItem.item_fragment_detail_v5);
-            ItemEightData(ItemData,5,myItem.item_fragment_detail_v6);
-            ItemEightData(ItemData,6,myItem.item_fragment_detail_v7);
+            ItemEightData(ItemData, 0, myItem.item_fragment_detail_v1);
+            ItemEightData(ItemData, 1, myItem.item_fragment_detail_v2);
+            ItemEightData(ItemData, 2, myItem.item_fragment_detail_v3);
+            ItemEightData(ItemData, 3, myItem.item_fragment_detail_v4);
+            ItemEightData(ItemData, 4, myItem.item_fragment_detail_v5);
+            ItemEightData(ItemData, 5, myItem.item_fragment_detail_v6);
+            ItemEightData(ItemData, 6, myItem.item_fragment_detail_v7);
             return convertView;
         }
 

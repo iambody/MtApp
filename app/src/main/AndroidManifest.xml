@@ -40,6 +40,18 @@
         android:smallScreens="true" />
 
     <!-- 百度 -->
+
+
+    <!-- sharesdk -->
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- sharesdk -->
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -62,25 +74,27 @@
         <activity
             android:name=".ui.ui.AHome"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
 
         <activity
             android:name=".ui.ui.ANewHome"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.ui.ACitys"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.ui.AAddCity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ui.AShareWeather"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
 
         <!-- Activity。。。。 -->
@@ -97,6 +111,10 @@
             </intent-filter>
         </service>
         <!-- 百度-->
+        <!-- sharesdk-->
+        <!--微信分享回调 -->
+
+        <!-- sharesdk -->
     </application>
 
 </manifest>

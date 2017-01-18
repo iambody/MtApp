@@ -31,6 +31,7 @@ import butterknife.OnClick;
 import io.vtown.WuMaiApp.Net.vollynet.NHttpBaseStr;
 import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.Utilss.SaveBitMapUtiils;
+import io.vtown.WuMaiApp.Utilss.SaveUiUtils;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
 import io.vtown.WuMaiApp.constant.Constans;
 import io.vtown.WuMaiApp.constant.PromptManager;
@@ -39,9 +40,13 @@ import io.vtown.WuMaiApp.fragment.FHome;
 import io.vtown.WuMaiApp.interf.IHttpResult;
 import io.vtown.WuMaiApp.module.BHome;
 import io.vtown.WuMaiApp.module.BMessage;
+import io.vtown.WuMaiApp.module.BUpData;
 import io.vtown.WuMaiApp.module.cites.BLSearchResultCites;
+import io.vtown.WuMaiApp.service.DownloadService;
+import io.vtown.WuMaiApp.service.upgrade.UpdateManager;
 import io.vtown.WuMaiApp.ui.ABase;
 import io.vtown.WuMaiApp.view.Xcircleindicator;
+import io.vtown.WuMaiApp.view.dialog.CustomDialog;
 
 
 /**
@@ -63,6 +68,8 @@ public class ANewHome extends ABase {
     RelativeLayout newhomeOutLay;
     @Bind(R.id.newhome_circleindicator)
     Xcircleindicator newhomeCircleindicator;
+    //判断是否是城市列表过来的
+    public static final String Tage_IsFromCity = "isfrmcity";
 
     public static final String Tag_CityName = "tagcity";
     private String GetCityName;
@@ -87,6 +94,40 @@ public class ANewHome extends ABase {
         IBund();
 
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        if (!intent.getBooleanExtra(Tage_IsFromCity, false)) return;
+        List<BLSearchResultCites> datass = Spuit.AllCity_Get(BaseActiviy);
+        List<FHome> Fragmensss = new ArrayList<>();
+
+        for (int i = 0; i < datass.size(); i++) {
+            Fragmensss.add(GetFforCity(datass.get(i)));
+        }
+        FragmentLs = Fragmensss;
+        Citys = datass;
+        fragmentPagerAdapter.notifyDataSetChanged();
+        newhomeCircleindicator.setCurrentPage(CurrentPostion);
+        CurrentPostion = FragmentLs.size() - 1;
+        newhomeViewpage.setCurrentItem(CurrentPostion);
+    }
+
+    /**
+     * 如果包含就获取已存在的fragment
+     */
+    private FHome GetFforCity(BLSearchResultCites d) {
+        int Postion = -1;
+        for (int i = 0; i < Citys.size(); i++) {
+            if (Citys.get(i).getAreaid().equals(d.getAreaid())) Postion = i;
+        }
+        if (Postion != -1) {
+            return FragmentLs.get(Postion);
+        } else {
+            return SetScreeSize(new FHome(), d.getAreaid(), d.getAreaname());
+        }
     }
 
     private void IBund() {
@@ -153,6 +194,9 @@ public class ANewHome extends ABase {
                 PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, ACitys.class));
                 break;
             case R.id.newhome_share_bt:
+                newhomeTitleUpLay.setVisibility(View.GONE);
+                SaveUiUtils.SaveScreen(ANewHome.this);
+                PromptManager.SkipActivity1(BaseActiviy,new Intent(BaseActiviy,AShareWeather.class));
                 break;
         }
     }
@@ -243,5 +287,90 @@ public class ANewHome extends ABase {
 
         }
 
+    }
+
+
+    /**
+     * 检查升级
+     */
+    /**
+     * 交互检测更新
+     */
+    private void UpCheck() {
+        NHttpBaseStr mBaseStr = new NHttpBaseStr(BaseContext);
+        mBaseStr.setPostResult(new IHttpResult<String>() {
+
+            @Override
+            public void onError(String error, int LoadType) {
+
+            }
+
+            @Override
+            public void getResult(int Code, String Msg, String Data) {
+                if (Code != 200 || StrUtils.isEmpty(Data)) {
+                    return;
+                }
+                BUpData data = JSON.parseObject(Data, BUpData.class);
+                if (data.getCode() >  Constans.getVersionCode(BaseContext)) {// 需要升级
+
+                    // status 1强制升级2不强制升级
+                    switch (data.getStatus()) {
+                        case 1:// 强制升级
+                            UpdateManager m = new UpdateManager(BaseContext, data
+                                    .getUrl(), data.getDesc(), data.getVersion());// "产品进行了优化\n部分功能进行升级"
+                            m.UpDown();
+                            break;
+                        case 2:// 不强制升级
+                            ShowCustomDialog(data);
+                            break;
+                        default:
+                            break;
+                    }
+
+                } else {// 不需要升级
+                    return;
+                }
+
+            }
+        });
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        map.put("project", "1");
+        mBaseStr.getData(Constans.UpData, map, Request.Method.GET);
+
+    }
+    /**
+     * 左右选择弹出框的封装
+     */
+    public void ShowCustomDialog(final BUpData data) {
+        final CustomDialog dialog = new CustomDialog(BaseContext,
+                R.style.mystyle, R.layout.dialog_purchase_cancel, 1,
+                getResources().getString(R.string.hulie_version),
+                getResources().getString(R.string.updown_version));
+        dialog.show();
+        dialog.setTitleText(getResources()
+                .getString(R.string.check_new_version));
+        dialog.Settitles(getResources().getString(R.string.new_version)
+                + data.getVersion() + "\n" + data.getDesc());
+
+        dialog.setcancelListener(new CustomDialog.oncancelClick() {
+
+            @Override
+            public void oncancelClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setConfirmListener(new CustomDialog.onConfirmClick() {
+            @Override
+            public void onConfirmCLick(View v) {
+                dialog.dismiss();
+                Intent mIntent = new Intent(ANewHome.this, DownloadService.class);
+                mIntent.putExtra(DownloadService.INTENT_URL, data.getUrl());
+                mIntent.putExtra(DownloadService.Desc, data.getDesc());
+                startService(mIntent);
+
+            }
+        });
     }
 }

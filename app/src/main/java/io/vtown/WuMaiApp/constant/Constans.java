@@ -65,6 +65,9 @@ public class Constans {
     * 获取多个城市的数据
     * */
     public static final String Area_Info = Host + "/v1/aqi/weather/getareainfo";
+    public static final String GetCityTodyData=Host+"/v1/aqi/weather/gettoday";
+    public static final String UpData=Host+"/v1/api/api/get-version";
+
     //*************************************URL****************************************************************
 
     /**

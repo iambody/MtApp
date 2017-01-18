@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="12dp"/>
     <ImageView
         android:id="@+id/item_home_hscrollview_iv"
         android:layout_width="@dimen/ui_40_dip"

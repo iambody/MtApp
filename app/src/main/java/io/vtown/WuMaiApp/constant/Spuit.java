@@ -53,6 +53,10 @@ public class Spuit {
     * 保存城市数据
     * */
     private static final String Sp_Save_City = "save_city";
+    /**
+     * 商品详情的保存
+     */
+    private static final String Sp_CityDetail = "citydetail_sp";
 
 
     /**
@@ -62,7 +66,7 @@ public class Spuit {
         SharedPreferences sp = xx.getSharedPreferences(Sp_SaveBaiDuLoaction,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("map_location",   JSON.toJSONString(MapLocation));
+        editor.putString("map_location", JSON.toJSONString(MapLocation));
         editor.commit();
     }
 
@@ -162,5 +166,22 @@ public class Spuit {
         editor.commit();
     }
 
+    /**
+     * 开始保存详情
+     */
+    public static void CityDetail_Save(String CityCode, String Detail, Context CX) {
+        SharedPreferences Sp = CX.getSharedPreferences(
+                Sp_CityDetail, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = Sp.edit();
+        editor.putString("cachecity" + CityCode, Detail);
+        editor.commit();
+    }
 
+    public static String CityDetail_Get(String CityCode, Context CX) {
+        SharedPreferences Sp = CX.getSharedPreferences(
+                Sp_CityDetail, Context.MODE_PRIVATE);
+        String citydetail = Sp.getString("cachecity" + CityCode, null);
+        return citydetail;
+
+    }
 }

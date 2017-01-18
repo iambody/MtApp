@@ -5,5 +5,11 @@
     <string name="error_code_desc">错误码说明</string>
     <string name="nullstr">--</string>
     <string name="error_fuwuqi">获取数据异常</string>
+    <string name="share_weixin">好友分享</string>
+    <string name="share_pyq">朋友圈</string>
+    <string name="hulie_version">取消</string>
+    <string name="updown_version">确定</string>
+    <string name="check_new_version">检测到新版本</string>
+    <string name="new_version">新版本</string>
 
 </resources>

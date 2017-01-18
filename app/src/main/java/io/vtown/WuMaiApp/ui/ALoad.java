@@ -2,26 +2,39 @@ package io.vtown.WuMaiApp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.android.volley.Request;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.Poi;
 
+import java.util.HashMap;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.vtown.WuMaiApp.MyApplication;
+import io.vtown.WuMaiApp.Net.vollynet.NHttpBaseStr;
 import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
+import io.vtown.WuMaiApp.constant.Constans;
 import io.vtown.WuMaiApp.constant.PromptManager;
+import io.vtown.WuMaiApp.interf.IHttpResult;
+import io.vtown.WuMaiApp.module.BUpData;
+import io.vtown.WuMaiApp.service.DownloadService;
 import io.vtown.WuMaiApp.service.LocationService;
+import io.vtown.WuMaiApp.service.upgrade.UpdateManager;
 import io.vtown.WuMaiApp.ui.ui.ACitys;
 import io.vtown.WuMaiApp.ui.ui.AHome;
 import io.vtown.WuMaiApp.ui.ui.ANewHome;
+import io.vtown.WuMaiApp.view.dialog.CustomDialog;
 
 public class ALoad extends ABase {
     @Bind(R.id.loading_bg_iv)
@@ -161,4 +174,7 @@ public class ALoad extends ABase {
         }
 
     };
+
+
+
 }
