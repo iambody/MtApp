@@ -22,6 +22,7 @@ import io.vtown.WuMaiApp.module.sign.Bsign;
  */
 
 public class Constans {
+
     /**
      * 开发环境 的host
      */
@@ -50,13 +51,20 @@ public class Constans {
      */
 //    public static String SignKey = "hkf%t5SMv1HtrVS!Y%B!NPNS!!0cWgy";
 
+            public static final int City_Count = 5;
+
     //************************************URL*****************************************************************
 //根据名称获取城市的id
     public static final String GetCityId = Host + "/v1/aqi/area/index";
 
-     //根据城市ID获取城市当天天气
+    //根据城市ID获取城市当天天气
 
-    public static final String GetCityTodyData=Host+"/v1/aqi/weather/gettoday";
+    public static final String GetCityTodyData = Host + "/v1/aqi/weather/gettoday";
+
+    /*
+    * 获取多个城市的数据
+    * */
+    public static final String Area_Info = Host + "/v1/aqi/weather/getareainfo";
     //*************************************URL****************************************************************
 
     /**

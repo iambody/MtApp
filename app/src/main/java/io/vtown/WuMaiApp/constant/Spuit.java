@@ -113,10 +113,14 @@ public class Spuit {
      */
     public static void Search_City_History_Save(Context pcContext,
                                                 List<String> cache) {
+        String s = "";
+
         SharedPreferences Sp = pcContext.getSharedPreferences(
                 Sp_Save_History_Search, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = Sp.edit();
-        String s = JSON.toJSONString(cache);
+        if(cache.size() > 0){
+            s = JSON.toJSONString(cache);
+        }
         editor.putString("history_search", s);
 
         editor.commit();

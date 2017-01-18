@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,10 +15,13 @@ public abstract class DragListViewAdapter extends BaseAdapter {
 
     public Context mContext;
     public List<BLSearchResultCites> mDragDatas;
+    public List<BLSearchResultCites> mInfodata ;
 
     public DragListViewAdapter(Context context, List<BLSearchResultCites> dataList){
         this.mContext = context;
         this.mDragDatas = dataList;
+
+
     }
 
     @Override
@@ -44,7 +48,13 @@ public abstract class DragListViewAdapter extends BaseAdapter {
 
     public void swapData(int from, int to){
         Collections.swap(mDragDatas, from, to);
+        Collections.swap(mInfodata, from, to);
 
+        notifyDataSetChanged();
+    }
+
+    public void setInfoData(List<BLSearchResultCites> infodata){
+        this.mInfodata = infodata;
         notifyDataSetChanged();
     }
 
@@ -54,6 +64,7 @@ public abstract class DragListViewAdapter extends BaseAdapter {
 
     public void deleteData(int position) {
         mDragDatas.remove(position);
+        mInfodata.remove(position);
         notifyDataSetChanged();
     }
 }
