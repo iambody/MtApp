@@ -57,9 +57,7 @@ public class Constans {
 //根据名称获取城市的id
     public static final String GetCityId = Host + "/v1/aqi/area/index";
 
-    //根据城市ID获取城市当天天气
 
-    public static final String GetCityTodyData = Host + "/v1/aqi/weather/gettoday";
 
     /*
     * 获取多个城市的数据
