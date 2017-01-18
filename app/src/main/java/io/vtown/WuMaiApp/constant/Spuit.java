@@ -62,7 +62,7 @@ public class Spuit {
         SharedPreferences sp = xx.getSharedPreferences(Sp_SaveBaiDuLoaction,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("map_location", MapLocation.toString());
+        editor.putString("map_location",   JSON.toJSONString(MapLocation));
         editor.commit();
     }
 

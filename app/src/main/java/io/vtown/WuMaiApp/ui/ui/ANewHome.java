@@ -126,6 +126,7 @@ public class ANewHome extends ABase {
             public void onPageSelected(int position) {
                 CurrentPostion = position;
                 newhomeCircleindicator.setCurrentPage(CurrentPostion);
+                StrUtils.SetTxt(newhomeCityTitle, Citys.get(CurrentPostion).getAreaname());
             }
 
             @Override
@@ -198,7 +199,7 @@ public class ANewHome extends ABase {
                 break;
             case BMessage.Tage_F_To_Home_Data:
                 CurrentHome = message.getMyBHome();
-                StrUtils.SetTxt(newhomeCityTitle, "北京-" + CurrentHome.getAqi_detail());
+
 
                 break;
         }
