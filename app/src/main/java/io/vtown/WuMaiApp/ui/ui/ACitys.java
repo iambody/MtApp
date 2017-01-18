@@ -128,7 +128,8 @@ public class ACitys extends ABase {
     protected void onPause() {
         super.onPause();
         if (mListAdapter != null) {
-            Spuit.Location_City_Save(BaseContext, mListAdapter.getData());
+            mCites = mListAdapter.getData();
+            Spuit.Location_City_Save(BaseContext,mCites);
         }
 
     }
