@@ -2,6 +2,7 @@ package io.vtown.WuMaiApp.view.custom;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -122,11 +123,15 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 BLSearchResultCites item = (BLSearchResultCites) city_lv_search_results.getAdapter().getItem(i);
                 BMessage message = new BMessage(BMessage.Tage_Select_City);
-                message.setmCity(item);
                 EventBus.getDefault().post(message);
+
+                List<BLSearchResultCites> Cites = Spuit.Location_City_Get(mContext);
+                BLSearchResultCites fristcity = Spuit.BaiDuMap_Location_Get(mContext);
+                checkCity(Cites,item,fristcity);
                 if (mListener != null) {
                     mListener.onClickResultItem(item);
                 }
+
             }
         });
 
@@ -184,6 +189,21 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 notifyStartSearching(txt);
             }
         });
+    }
+
+    private void checkCity(List<BLSearchResultCites> mCites, BLSearchResultCites blSearchResultCites, BLSearchResultCites fristcity){
+        if (mCites.size() > 0) {
+            for (int i = 0; i < mCites.size(); i++) {
+                if (!mCites.get(i).getAreaid().equals(blSearchResultCites.getAreaid()) && !fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
+                    mCites.add(blSearchResultCites);
+                }
+            }
+        } else {
+            if (!fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
+                mCites.add(blSearchResultCites);
+            }
+        }
+        Spuit.Location_City_Save(mContext,mCites);
     }
 
     /**

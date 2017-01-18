@@ -288,25 +288,27 @@ public class ACitys extends ABase {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ReciveMessage(BMessage message) {
         if (BMessage.Tage_Select_City == message.getTage_Message()) {
-            BLSearchResultCites blSearchResultCites = message.getmCity();
-            mCites = mListAdapter.getData();
-            if (mCites.size() > 0) {
-                for (int i = 0; i < mCites.size(); i++) {
-                    if (!mCites.get(i).getAreaid().equals(blSearchResultCites.getAreaid()) && !mFristCity.getAreaid().equals(blSearchResultCites.getAreaid())) {
-                        mCites.add(blSearchResultCites);
-                    }
-                }
-            } else {
-                if (!mFristCity.getAreaid().equals(blSearchResultCites.getAreaid())) {
-                    mCites.add(blSearchResultCites);
-                }
-            }
 
-            if (mListAdapter != null) {
-                Spuit.Location_City_Save(BaseContext,mCites);
-            }
-            //getAreaInfo(mCites);
-            //initView();
+            ACitys.this.finish();
+//            BLSearchResultCites blSearchResultCites = message.getmCity();
+//            mCites = mListAdapter.getData();
+//            if (mCites.size() > 0) {
+//                for (int i = 0; i < mCites.size(); i++) {
+//                    if (!mCites.get(i).getAreaid().equals(blSearchResultCites.getAreaid()) && !mFristCity.getAreaid().equals(blSearchResultCites.getAreaid())) {
+//                        mCites.add(blSearchResultCites);
+//                    }
+//                }
+//            } else {
+//                if (!mFristCity.getAreaid().equals(blSearchResultCites.getAreaid())) {
+//                    mCites.add(blSearchResultCites);
+//                }
+//            }
+//
+//            if (mListAdapter != null) {
+//                Spuit.Location_City_Save(BaseContext,mCites);
+//            }
+//            //getAreaInfo(mCites);
+//            //initView();
         }
     }
 

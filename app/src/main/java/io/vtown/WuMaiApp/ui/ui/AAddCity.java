@@ -1,5 +1,6 @@
 package io.vtown.WuMaiApp.ui.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -253,6 +254,12 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
     @Override
     public void onClickResultItem(BLSearchResultCites item) {
         //Toast.makeText(BaseContext, position + "", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(BaseContext, ANewHome.class);
+        intent.putExtra(ANewHome.Tage_IsFromCity,true);
+        startActivity(intent);
+
+
         AAddCity.this.finish();
     }
 
