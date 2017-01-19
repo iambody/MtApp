@@ -45,15 +45,31 @@
             android:src="@mipmap/newhome_up_share_iv" />
     </LinearLayout>
 
-    <io.vtown.WuMaiApp.view.Xcircleindicator
-        android:id="@+id/newhome_circleindicator"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/newhome_title_up_lay"
-        android:layout_centerHorizontal="true"
-        indicator:circleInterval="10dp"
-        indicator:fillColor="@color/white"
-        indicator:radius="5dp"
-        indicator:strokeColor="@color/app_gray"
-        android:layout_marginTop="@dimen/ui_10_dip"/>
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent4"
+        android:padding="@dimen/ui_5_dip">
+
+        <ImageView
+            android:id="@+id/newhome_wenhao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/ui_5_dip"
+            android:src="@mipmap/wenhao"
+             />
+
+        <io.vtown.WuMaiApp.view.Xcircleindicator
+            android:id="@+id/newhome_circleindicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            indicator:circleInterval="10dp"
+            indicator:fillColor="@color/white"
+            indicator:radius="5dp"
+            indicator:strokeColor="@color/app_gray" />
+    </RelativeLayout>
+
 </RelativeLayout>

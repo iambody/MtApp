@@ -26,4 +26,7 @@
     <dimen name="ui_28_dip">28dp</dimen>
     <dimen name="ui_10_dip">10dp</dimen>
     <dimen name="ui_15_dip">15dp</dimen>
+    <dimen name="ui_36_dip">36dp</dimen>
+    <dimen name="ui_4_dip">4dp</dimen>
+    <dimen name="ui_3_dip">3dp</dimen>
 </resources>

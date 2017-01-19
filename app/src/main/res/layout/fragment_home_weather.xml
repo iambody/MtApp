@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/transparent"
+                    android:background="@color/transparent6"
                     android:scrollbars="none">
 
                     <LinearLayout
@@ -82,7 +82,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/ui_5_dip"
+                        android:paddingBottom="@dimen/ui_5_dip">
 
 
                     </LinearLayout>

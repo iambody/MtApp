@@ -18,8 +18,8 @@
         android:textSize="12dp"/>
     <ImageView
         android:id="@+id/item_home_hscrollview_iv"
-        android:layout_width="@dimen/ui_40_dip"
-        android:layout_height="@dimen/ui_40_dip" />
+        android:layout_width="@dimen/ui_36_dip"
+        android:layout_height="@dimen/ui_36_dip" />
 
     <TextView
         android:id="@+id/item_home_hscrollview_level"
