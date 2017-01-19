@@ -77,13 +77,13 @@ public class ANewHome extends ABase {
 
 
     private List<FHome> FragmentLs = new ArrayList<>();
-    private FragmentPagerAdapter fragmentPagerAdapter;
+    private MyViewPage fragmentPagerAdapter;
 
     //当前所在的fragment的数据
     private BHome CurrentHome;
     private List<BLSearchResultCites> Citys = new ArrayList<>();
     //当前的位置
-    private int CurrentPostion = 0;
+    private int CurrentPostion = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,9 +109,11 @@ public class ANewHome extends ABase {
         }
         FragmentLs = Fragmensss;
         Citys = datass;
-        fragmentPagerAdapter.notifyDataSetChanged();
-        newhomeCircleindicator.setCurrentPage(CurrentPostion);
         CurrentPostion = FragmentLs.size() - 1;
+        newhomeCircleindicator.initData(FragmentLs.size() , FragmentLs.size());
+
+        fragmentPagerAdapter=new MyViewPage(getSupportFragmentManager());
+        newhomeViewpage.setAdapter(fragmentPagerAdapter);
         newhomeViewpage.setCurrentItem(CurrentPostion);
     }
 
@@ -196,7 +198,7 @@ public class ANewHome extends ABase {
             case R.id.newhome_share_bt:
                 newhomeTitleUpLay.setVisibility(View.GONE);
                 SaveUiUtils.SaveScreen(ANewHome.this);
-                PromptManager.SkipActivity1(BaseActiviy,new Intent(BaseActiviy,AShareWeather.class));
+                PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AShareWeather.class));
                 break;
         }
     }
@@ -311,7 +313,7 @@ public class ANewHome extends ABase {
                     return;
                 }
                 BUpData data = JSON.parseObject(Data, BUpData.class);
-                if (data.getCode() >  Constans.getVersionCode(BaseContext)) {// 需要升级
+                if (data.getCode() > Constans.getVersionCode(BaseContext)) {// 需要升级
 
                     // status 1强制升级2不强制升级
                     switch (data.getStatus()) {
@@ -339,6 +341,7 @@ public class ANewHome extends ABase {
         mBaseStr.getData(Constans.UpData, map, Request.Method.GET);
 
     }
+
     /**
      * 左右选择弹出框的封装
      */
