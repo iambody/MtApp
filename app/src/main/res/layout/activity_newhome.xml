@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/transparent4"
+        android:background="@color/transparent6"
         android:padding="@dimen/ui_5_dip">
 
         <ImageView

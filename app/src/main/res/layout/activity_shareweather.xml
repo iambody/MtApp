@@ -22,13 +22,27 @@
                 android:src="@mipmap/home_bg2" />
 
             <ImageView
+                android:id="@+id/share_qrema"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="@dimen/ui_30_dip"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="30dp"
                 android:src="@mipmap/qrcode" />
+
+            <TextView
+                android:text="霾太-七天雾霾预报"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:textColor="@color/white"
+                android:layout_below="@+id/share_qrema"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                 android:layout_marginRight="@dimen/ui_8_dip"
+                android:textSize="12dp"
+                android:layout_marginTop="3dp" />
         </RelativeLayout>
     </ScrollView>
 

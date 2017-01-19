@@ -94,7 +94,6 @@ public class ANewHome extends ABase {
         EventBus.getDefault().register(this);
         UpCheck();
         IBund();
-
     }
 
     @Override
