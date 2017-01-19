@@ -386,8 +386,9 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
                     if (datas.size() == 0) {
                         // historySearchLayout.setVisibility(View.GONE);
                         citySearchLayout.setHistoryShow(false);
-                        Spuit.Search_City_History_Save(BaseContext, datas);
+
                     }
+                    Spuit.Search_City_History_Save(BaseContext, datas);
                 }
             });
             return view;

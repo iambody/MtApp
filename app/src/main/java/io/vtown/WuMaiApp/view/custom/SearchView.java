@@ -216,6 +216,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 }
             }
             if(!flag){
+                if(history_city.size() == Constans.History_City_Count){
+                    history_city.remove(0);
+                }
                 history_city.add(item);
             }
         }else{

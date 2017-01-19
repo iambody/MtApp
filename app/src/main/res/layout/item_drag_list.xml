@@ -71,7 +71,7 @@ android:background="@drawable/selector_city_delete_bg"
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
-                android:src="@drawable/cha_iv" />
+                android:src="@drawable/delete_city_nor" />
 
 
         </LinearLayout>

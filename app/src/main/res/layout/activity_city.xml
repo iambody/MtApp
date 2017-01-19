@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/address_iv" />
+                android:src="@drawable/location_nor" />
 
 
         </LinearLayout>
