@@ -46,8 +46,6 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
 
     @Bind(R.id.city_search_layout)
     SearchView citySearchLayout;
-    //@Bind(R.id.city_lv_search_results)
-    //ListView cityLvSearchResults;
 
     /**
      * 默认提示框显示项的个数
@@ -58,12 +56,6 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
      * 提示框显示项的个数
      */
     private static int hintSize = DEFAULT_HINT_SIZE;
-    // @Bind(R.id.city_lv_history_search)
-    // ListView cityLvHistorySearch;
-    // @Bind(R.id.history_search_layout)
-    //LinearLayout historySearchLayout;
-    // @Bind(R.id.delete_all_history)
-    // LinearLayout deleteAllHistory;
 
     /**
      * 自动补全列表adapter
@@ -91,7 +83,6 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_city);
         ButterKnife.bind(this);
-
         initData();
         initView();
     }
@@ -100,23 +91,8 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
     private void initView() {
         citySearchLayout.setSearchViewListener(this);
         citySearchLayout.setTipsHintAdapter(hintAdapter);
-
-        //citySearchLayout.setTipsHintAdapter(hintAdapter);
         citySearchLayout.setAutoCompleteAdapter(autoCompleteAdapter);
-
         citySearchLayout.setResultAdapter(resultAdapter);
-
-//        cityLvSearchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                BLSearchResultCites item = (BLSearchResultCites) resultAdapter.getItem(position);
-//                BMessage message = new BMessage(BMessage.Tage_Select_City);
-//                message.setmCity(item);
-//                EventBus.getDefault().post(message);
-//                Toast.makeText(BaseContext, position + "", Toast.LENGTH_SHORT).show();
-//                AAddCity.this.finish();
-//            }
-//        });
     }
 
     private void initData() {
@@ -209,14 +185,9 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
     }
 
     private void getHintData() {
-
         if (hintAdapter == null) {
-            // historySearchLayout.setVisibility(View.VISIBLE);
             hintAdapter = new HistorySearchAdapter(hintData, R.layout.item_search_hint);
-            //cityLvHistorySearch.setAdapter(hintAdapter);
         } else {
-
-            //historySearchLayout.setVisibility(View.GONE);
             hintAdapter.notifyDataSetChanged();
         }
     }
@@ -224,47 +195,23 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
 
     @Override
     public void onRefreshAutoComplete(String text) {
-        //getAreaData(text, 20, TYPE_AOTO_DATA);
         getAreaData(text, 20, TYPE_RESULT_DATA);
     }
 
     @Override
     public void onSearch(String text) {
-        //更新result数据
 
-//        //getResultData(text);
-//        cityLvSearchResults.setVisibility(View.VISIBLE);
-//        //第一次获取结果 还未配置适配器
-//        if (cityLvSearchResults.getAdapter() == null) {
-//            //获取搜索数据 设置适配器
-//            cityLvSearchResults.setAdapter(resultAdapter);
-//        } else {
-//            //更新搜索数据
-//            resultAdapter.notifyDataSetChanged();
-//        }
     }
 
     @Override
     public void onClickResultItem(BLSearchResultCites item) {
-        //Toast.makeText(BaseContext, position + "", Toast.LENGTH_SHORT).show();
-
         Intent intent = new Intent(BaseContext, ANewHome.class);
         intent.putExtra(ANewHome.Tage_IsFromCity,true);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-
-
         AAddCity.this.finish();
     }
 
-
-//    @OnClick(R.id.delete_all_history)
-//    public void onClick() {
-//
-//        //清空历史记录
-//
-//
-//    }
 
     class SearchResultAdapter extends BaseAdapter {
 
@@ -384,16 +331,13 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
                     datas.remove(position);
                     notifyDataSetChanged();
                     if (datas.size() == 0) {
-                        // historySearchLayout.setVisibility(View.GONE);
                         citySearchLayout.setHistoryShow(false);
-
                     }
                     Spuit.Search_City_History_Save(BaseContext, datas);
                 }
             });
             return view;
         }
-
 
     }
 
@@ -402,7 +346,6 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
         TextView tvSearchHistoryCityname;
         @Bind(R.id.iv_delete_history)
         ImageView ivDeleteHistory;
-
         HistoryHolder(View view) {
             ButterKnife.bind(this, view);
         }
