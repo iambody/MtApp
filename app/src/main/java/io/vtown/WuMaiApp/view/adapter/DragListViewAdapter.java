@@ -48,7 +48,7 @@ public abstract class DragListViewAdapter extends BaseAdapter {
 
     public void swapData(int from, int to){
         Collections.swap(mDragDatas, from, to);
-        Collections.swap(mInfodata, from, to);
+        //Collections.swap(mInfodata, from, to);
 
         notifyDataSetChanged();
     }
@@ -64,7 +64,7 @@ public abstract class DragListViewAdapter extends BaseAdapter {
 
     public void deleteData(int position) {
         mDragDatas.remove(position);
-        mInfodata.remove(position);
+        //mInfodata.remove(position);
         notifyDataSetChanged();
     }
 }

@@ -71,8 +71,10 @@ public class ACitys extends ABase {
         EventBus.getDefault().register(this);
         initCache();
         initTitleView();
-        initFristView();
-        //initView();
+        setFristCityInfo(mFristCity);
+        getAreaInfo(mCites);
+        initView();
+
 
     }
 
@@ -86,60 +88,66 @@ public class ACitys extends ABase {
         });
     }
 
-    private void initFristView() {
-        if (mFristCity != null) {
-            StrUtils.SetTxt(tvFristCityName, mFristCity.getAreaname());
-        }
 
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initView();
-        getAreaInfo(mListAdapter.getData());
+
 
     }
 
     private void setFristCityInfo(BLSearchResultCites info) {
-        switch (info.getAqi_level()) {
-            case 0:
-                layoutFristItem.setBackgroundResource(R.drawable.aqi_lv0);
-                break;
+        if (info != null) {
 
-            case 1:
-                layoutFristItem.setBackgroundResource(R.drawable.aqi_lv1);
-                break;
 
-            case 2:
-                layoutFristItem.setBackgroundResource(R.drawable.aqi_lv2);
-                break;
+            if (!StrUtils.isEmpty(info.getAqi_detail())) {
+                mFristCity.setAqi(info.getAqi());
+                mFristCity.setAqi_level(info.getAqi_level());
+                mFristCity.setAqi_detail(info.getAqi_detail());
+                Spuit.BaiDuMap_Location_Save(BaseContext, mFristCity);
+                switch (info.getAqi_level()) {
+                    case 0:
+                        layoutFristItem.setBackgroundResource(R.drawable.aqi_lv0);
+                        break;
 
-            case 3:
-                layoutFristItem.setBackgroundResource(R.drawable.aqi_lv3);
-                break;
+                    case 1:
+                        layoutFristItem.setBackgroundResource(R.drawable.aqi_lv1);
+                        break;
 
-            case 4:
-                layoutFristItem.setBackgroundResource(R.drawable.aqi_lv4);
-                break;
+                    case 2:
+                        layoutFristItem.setBackgroundResource(R.drawable.aqi_lv2);
+                        break;
 
-            case 5:
-                layoutFristItem.setBackgroundResource(R.drawable.aqi_lv5);
-                break;
+                    case 3:
+                        layoutFristItem.setBackgroundResource(R.drawable.aqi_lv3);
+                        break;
 
-            case 6:
-                layoutFristItem.setBackgroundResource(R.drawable.aqi_lv6);
-                break;
+                    case 4:
+                        layoutFristItem.setBackgroundResource(R.drawable.aqi_lv4);
+                        break;
+
+                    case 5:
+                        layoutFristItem.setBackgroundResource(R.drawable.aqi_lv5);
+                        break;
+
+                    case 6:
+                        layoutFristItem.setBackgroundResource(R.drawable.aqi_lv6);
+                        break;
+                }
+                tvFristCityAqiDetail.setText(info.getAqi_detail());
+                tvFristCityAqi.setText(info.getAqi() + "");
+            }
+
+            StrUtils.SetTxt(tvFristCityName, mFristCity.getAreaname());
         }
-        tvFristCityAqiDetail.setText(info.getAqi_detail());
-        tvFristCityAqi.setText(info.getAqi() + "");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if (mListAdapter != null) {
-            Spuit.Location_City_Save(BaseContext,mListAdapter.getData());
+            Spuit.Location_City_Save(BaseContext, mListAdapter.getData());
         }
     }
 
@@ -179,9 +187,11 @@ public class ACitys extends ABase {
 
                 mArea_infos = JSON.parseArray(Data, BLSearchResultCites.class);
                 if (mArea_infos.size() > 0) {
-                    setFristCityInfo(mArea_infos.get(0));
-                    mArea_infos.remove(0);
-                    mListAdapter.setInfoData(mArea_infos);
+                    setFristCityInfo(mArea_infos.get(0));//设置第一个城市数据
+                    mArea_infos.remove(0);//去除第一个的数据
+                    //mListAdapter.setInfoData(mArea_infos);
+                    FreashCahceDetailInf(mCites, mArea_infos);
+                    initView();//刷新AP
                 }
 
             }
@@ -194,6 +204,18 @@ public class ACitys extends ABase {
         HashMap<String, String> map = new HashMap<>();
         map.put("areaid_string", areaid_str);
         BaNHttpBaseStr.getData(Constans.Area_Info, map, Request.Method.GET);
+    }
+
+    /*
+    * 把获取到的aqi等数据放到地点list
+    * */
+    private void FreashCahceDetailInf(List<BLSearchResultCites> data, List<BLSearchResultCites> mArea_infos) {
+        for (int i = 0; i < mArea_infos.size(); i++) {
+            data.get(i).setAqi(mArea_infos.get(i).getAqi());
+            data.get(i).setAqi_level(mArea_infos.get(i).getAqi_level());
+            data.get(i).setAqi_detail(mArea_infos.get(i).getAqi_detail());
+        }
+        mCites = data;
     }
 
     private void initView() {
@@ -213,7 +235,6 @@ public class ACitys extends ABase {
     }
 
     public class MyAdapter extends DragListViewAdapter {
-
 
 
         public MyAdapter(Context context, List<BLSearchResultCites> dataList) {
@@ -236,48 +257,48 @@ public class ACitys extends ABase {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
+            BLSearchResultCites info_data = mDragDatas.get(position);
+
+            if (!StrUtils.isEmpty(mDragDatas.get(position).getAqi_detail())) {
 
 
-                if (mInfodata != null && mInfodata.size() > 0) {
-                    BLSearchResultCites info_data = mInfodata.get(position);
+                switch (info_data.getAqi_level()) {
+                    case 0:
+                        viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv0);
+                        break;
 
-                    switch (info_data.getAqi_level()) {
-                        case 0:
-                            viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv0);
-                            break;
+                    case 1:
+                        viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv1);
+                        break;
 
-                        case 1:
-                            viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv1);
-                            break;
+                    case 2:
+                        viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv2);
+                        break;
 
-                        case 2:
-                            viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv2);
-                            break;
+                    case 3:
+                        viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv3);
+                        break;
 
-                        case 3:
-                            viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv3);
-                            break;
+                    case 4:
+                        viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv4);
+                        break;
 
-                        case 4:
-                            viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv4);
-                            break;
+                    case 5:
+                        viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv5);
+                        break;
 
-                        case 5:
-                            viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv5);
-                            break;
-
-                        case 6:
-                            viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv6);
-                            break;
-                    }
-
-
-                    viewHolder.tv_item_drag_list_aqi.setText(info_data.getAqi() + "");
-                    viewHolder.tv_item_drag_list_aqi_detail.setText(info_data.getAqi_detail());
+                    case 6:
+                        viewHolder.ll_item_drag_list_layout.setBackgroundResource(R.drawable.aqi_lv6);
+                        break;
                 }
 
 
-            viewHolder.name.setText(mDragDatas.get(position).getAreaname());
+                viewHolder.tv_item_drag_list_aqi.setText(info_data.getAqi() + "");
+                viewHolder.tv_item_drag_list_aqi_detail.setText(info_data.getAqi_detail());
+            }
+
+
+            viewHolder.name.setText(info_data.getAreaname());
             viewHolder.delete_city.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
