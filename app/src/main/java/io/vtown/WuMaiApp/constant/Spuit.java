@@ -86,7 +86,7 @@ public class Spuit {
      */
     public static List<BLSearchResultCites> AllCity_Get(Context XX) {
         List<BLSearchResultCites> alldatas = new ArrayList<>();
-        alldatas.add(BaiDuMap_Location_Get(XX));
+        if (BaiDuMap_Location_Get(XX) != null) alldatas.add(BaiDuMap_Location_Get(XX));
         alldatas.addAll(Location_City_Get(XX));
         return alldatas;
     }
@@ -122,7 +122,7 @@ public class Spuit {
         SharedPreferences Sp = pcContext.getSharedPreferences(
                 Sp_Save_History_Search, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = Sp.edit();
-        if(cache.size() > 0){
+        if (cache.size() > 0) {
             s = JSON.toJSONString(cache);
         }
         editor.putString("history_search", s);

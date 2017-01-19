@@ -82,5 +82,7 @@
         <item name="android:layout_width">@dimen/line_size1</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:src">@color/app_line</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">8dp</item>
     </style>
 </resources>

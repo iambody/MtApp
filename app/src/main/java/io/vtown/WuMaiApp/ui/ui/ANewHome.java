@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +29,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.vtown.WuMaiApp.Net.vollynet.NHttpBaseStr;
 import io.vtown.WuMaiApp.R;
-import io.vtown.WuMaiApp.Utilss.SaveBitMapUtiils;
 import io.vtown.WuMaiApp.Utilss.SaveUiUtils;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
 import io.vtown.WuMaiApp.constant.Constans;
@@ -45,6 +43,7 @@ import io.vtown.WuMaiApp.module.cites.BLSearchResultCites;
 import io.vtown.WuMaiApp.service.DownloadService;
 import io.vtown.WuMaiApp.service.upgrade.UpdateManager;
 import io.vtown.WuMaiApp.ui.ABase;
+import io.vtown.WuMaiApp.ui.AWeb;
 import io.vtown.WuMaiApp.view.Xcircleindicator;
 import io.vtown.WuMaiApp.view.dialog.CustomDialog;
 
@@ -72,6 +71,8 @@ public class ANewHome extends ABase {
     public static final String Tage_IsFromCity = "isfrmcity";
 
     public static final String Tag_CityName = "tagcity";
+    @Bind(R.id.newhome_wenhao)
+    ImageView newhomeWenhao;
     private String GetCityName;
     private String GetCityCode;
 
@@ -91,8 +92,8 @@ public class ANewHome extends ABase {
         setContentView(R.layout.activity_newhome);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        UpCheck();
         IBund();
-
 
     }
 
@@ -138,6 +139,7 @@ public class ANewHome extends ABase {
             GetCityName = Citys.get(0).getAreaname();
             GetCityCode = Citys.get(0).getAreaid();
             CurrentPostion = Citys.size() - 1;
+            if (getIntent().getBooleanExtra("isdrag", false)) CurrentPostion = 0;
             IBase();
         } else {
             GetCityName = getIntent().getStringExtra(Tag_CityName);
@@ -203,7 +205,7 @@ public class ANewHome extends ABase {
         return f;
     }
 
-    @OnClick({R.id.newhome_city_bt, R.id.newhome_share_bt})
+    @OnClick({R.id.newhome_city_bt, R.id.newhome_share_bt, R.id.newhome_wenhao})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.newhome_city_bt:
@@ -215,6 +217,9 @@ public class ANewHome extends ABase {
                 PromptManager.showLoading(BaseContext);
                 SaveUiUtils.SaveScrollView(FragmentLs.get(CurrentPostion).GetScrollview());
                 PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AShareWeather.class));
+                break;
+            case R.id.newhome_wenhao:
+                PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AWeb.class));
                 break;
         }
     }

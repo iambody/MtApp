@@ -75,7 +75,10 @@
             android:name=".ui.ui.AHome"
 
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".ui.AWeb"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.ui.ANewHome"

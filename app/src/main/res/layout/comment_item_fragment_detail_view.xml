@@ -15,6 +15,7 @@
         android:textSize="10dp" />
 
     <ImageView
+        android:layout_marginTop="@dimen/ui_3_dip"
         android:id="@+id/comment_item_detail_view_center_iv"
         android:layout_width="@dimen/ui_28_dip"
         android:layout_height="@dimen/ui_28_dip"
@@ -27,5 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
+        android:layout_marginTop="@dimen/ui_4_dip"
         android:textSize="12dp" />
 </LinearLayout>
