@@ -72,6 +72,7 @@ public class ACitys extends ABase {
         initCache();
         initTitleView();
         setFristCityInfo(mFristCity);
+
         getAreaInfo(mCites);
         initView();
 

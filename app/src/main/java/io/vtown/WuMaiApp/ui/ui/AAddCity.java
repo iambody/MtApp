@@ -195,7 +195,6 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
                             break;
                     }
                 }
-                PromptManager.ShowCustomToast(BaseContext, Data);
             }
 
             @Override
@@ -254,6 +253,7 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
 
         Intent intent = new Intent(BaseContext, ANewHome.class);
         intent.putExtra(ANewHome.Tage_IsFromCity,true);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
 
