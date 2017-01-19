@@ -28,6 +28,7 @@ import java.util.List;
 
 import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
+import io.vtown.WuMaiApp.constant.Constans;
 import io.vtown.WuMaiApp.constant.Spuit;
 import io.vtown.WuMaiApp.module.BMessage;
 import io.vtown.WuMaiApp.module.cites.BLSearchResultCites;
@@ -236,6 +237,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 }
             }
             if(!flag){
+                if(mCites.size() == Constans.City_Count){//如果保存已达到上限，删除第一个再添加
+                    mCites.remove(0);
+                }
                 mCites.add(blSearchResultCites);
             }
 
