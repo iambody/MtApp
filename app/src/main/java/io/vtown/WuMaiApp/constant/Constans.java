@@ -51,7 +51,7 @@ public class Constans {
      */
 //    public static String SignKey = "hkf%t5SMv1HtrVS!Y%B!NPNS!!0cWgy";
 
-            public static final int City_Count = 5;
+            public static final int City_Count = 7;
 
     //************************************URL*****************************************************************
 //根据名称获取城市的id

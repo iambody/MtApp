@@ -59,7 +59,7 @@ public class ACitys extends ABase {
     TextView tvFristCityAqi;
 
     private List<BLSearchResultCites> mNoDragData = new ArrayList<BLSearchResultCites>();
-    private List<BLSearchResultCites> mCites = new ArrayList<BLSearchResultCites>(Constans.City_Count);
+    private List<BLSearchResultCites> mCites = new ArrayList<BLSearchResultCites>();
     private List<BLSearchResultCites> mArea_infos;
     private MyAdapter mListAdapter;
     private BLSearchResultCites mFristCity;
@@ -102,12 +102,11 @@ public class ACitys extends ABase {
     protected void onResume() {
         super.onResume();
 
-
     }
 
     private void setFristCityInfo(BLSearchResultCites info) {
-        if (info != null) {
-
+        if (info != null) {//如果获取的缓存为空就不显示定位城市
+            layoutFristItem.setVisibility(View.VISIBLE);
 
             if (!StrUtils.isEmpty(info.getAqi_detail())) {
                 mFristCity.setAqi(info.getAqi());
@@ -148,6 +147,8 @@ public class ACitys extends ABase {
             }
 
             StrUtils.SetTxt(tvFristCityName, mFristCity.getAreaname());
+        }else{
+            layoutFristItem.setVisibility(View.GONE);
         }
     }
 
@@ -168,8 +169,20 @@ public class ACitys extends ABase {
 
     private String getAreaid_Str(List<BLSearchResultCites> data) {
         String frist_id = "";
-        if (data.size() > 0) {
-            frist_id = mFristCity.getAreaid() + ",";
+        if(mFristCity != null){
+            if (data.size() > 0) {
+                frist_id = mFristCity.getAreaid() + ",";
+                for (int i = 0; i < data.size(); i++) {
+                    if (i != data.size() - 1) {
+                        frist_id += data.get(i).getAreaid() + ",";
+                    } else {
+                        frist_id += data.get(i).getAreaid();
+                    }
+                }
+            } else {
+                frist_id = mFristCity.getAreaid();
+            }
+        }else{
             for (int i = 0; i < data.size(); i++) {
                 if (i != data.size() - 1) {
                     frist_id += data.get(i).getAreaid() + ",";
@@ -177,8 +190,6 @@ public class ACitys extends ABase {
                     frist_id += data.get(i).getAreaid();
                 }
             }
-        } else {
-            frist_id = mFristCity.getAreaid();
         }
         return frist_id;
     }
@@ -196,8 +207,10 @@ public class ACitys extends ABase {
 
                 mArea_infos = JSON.parseArray(Data, BLSearchResultCites.class);
                 if (mArea_infos.size() > 0) {
-                    setFristCityInfo(mArea_infos.get(0));//设置第一个城市数据
-                    mArea_infos.remove(0);//去除第一个的数据
+                    if(mFristCity != null){
+                        setFristCityInfo(mArea_infos.get(0));//设置第一个城市数据
+                        mArea_infos.remove(0);//去除第一个的数据
+                    }
                     //mListAdapter.setInfoData(mArea_infos);
                     FreashCahceDetailInf(mCites, mArea_infos);
                     initView();//刷新AP
@@ -329,25 +342,6 @@ public class ACitys extends ABase {
         if (BMessage.Tage_Select_City == message.getTage_Message()) {
 
             ACitys.this.finish();
-//            BLSearchResultCites blSearchResultCites = message.getmCity();
-//            mCites = mListAdapter.getData();
-//            if (mCites.size() > 0) {
-//                for (int i = 0; i < mCites.size(); i++) {
-//                    if (!mCites.get(i).getAreaid().equals(blSearchResultCites.getAreaid()) && !mFristCity.getAreaid().equals(blSearchResultCites.getAreaid())) {
-//                        mCites.add(blSearchResultCites);
-//                    }
-//                }
-//            } else {
-//                if (!mFristCity.getAreaid().equals(blSearchResultCites.getAreaid())) {
-//                    mCites.add(blSearchResultCites);
-//                }
-//            }
-//
-//            if (mListAdapter != null) {
-//                Spuit.Location_City_Save(BaseContext,mCites);
-//            }
-//            //getAreaInfo(mCites);
-//            //initView();
         }
     }
 

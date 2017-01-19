@@ -242,9 +242,6 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
 //            //更新搜索数据
 //            resultAdapter.notifyDataSetChanged();
 //        }
-
-
-        Toast.makeText(this, "完成搜素", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -355,9 +352,7 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
         }
 
        public void removeData(){
-           for(int i =0 ;i < datas.size();i++){
-               datas.remove(i);
-           }
+           datas.clear();
            notifyDataSetChanged();
        }
 
@@ -390,6 +385,7 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
                     notifyDataSetChanged();
                     if (datas.size() == 0) {
                         // historySearchLayout.setVisibility(View.GONE);
+                        citySearchLayout.setHistoryShow(false);
                         Spuit.Search_City_History_Save(BaseContext, datas);
                     }
                 }

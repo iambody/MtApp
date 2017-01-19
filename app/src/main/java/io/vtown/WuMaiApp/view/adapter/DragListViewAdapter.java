@@ -22,6 +22,7 @@ public abstract class DragListViewAdapter extends BaseAdapter {
     public DragListViewAdapter(Context context, List<BLSearchResultCites> dataList){
         this.mContext = context;
         this.mDragDatas = dataList;
+        this.mNoDragDatas.clear();
         this.mNoDragDatas.addAll(dataList);
 
 
