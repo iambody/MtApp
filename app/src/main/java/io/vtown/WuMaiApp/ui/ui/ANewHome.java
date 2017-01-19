@@ -83,7 +83,7 @@ public class ANewHome extends ABase {
     private BHome CurrentHome;
     private List<BLSearchResultCites> Citys = new ArrayList<>();
     //当前的位置
-    private int CurrentPostion = 1;
+    private int CurrentPostion = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,9 +110,9 @@ public class ANewHome extends ABase {
         FragmentLs = Fragmensss;
         Citys = datass;
         CurrentPostion = FragmentLs.size() - 1;
-        newhomeCircleindicator.initData(FragmentLs.size() , FragmentLs.size());
+        newhomeCircleindicator.initData(FragmentLs.size(), FragmentLs.size());
 
-        fragmentPagerAdapter=new MyViewPage(getSupportFragmentManager());
+        fragmentPagerAdapter = new MyViewPage(getSupportFragmentManager());
         newhomeViewpage.setAdapter(fragmentPagerAdapter);
         newhomeViewpage.setCurrentItem(CurrentPostion);
     }
@@ -121,31 +121,44 @@ public class ANewHome extends ABase {
      * 如果包含就获取已存在的fragment
      */
     private FHome GetFforCity(BLSearchResultCites d) {
-        int Postion = -1;
-        for (int i = 0; i < Citys.size(); i++) {
-            if (Citys.get(i).getAreaid().equals(d.getAreaid())) Postion = i;
-        }
-        if (Postion != -1) {
-            return FragmentLs.get(Postion);
-        } else {
-            return SetScreeSize(new FHome(), d.getAreaid(), d.getAreaname());
-        }
+//        int Postion = -1;
+//        for (int i = 0; i < Citys.size(); i++) {
+//            if (Citys.get(i).getAreaid().equals(d.getAreaid())) Postion = i;
+//        }
+//        if (Postion != -1) {
+//            return FragmentLs.get(Postion);
+//        } else {
+        return SetScreeSize(new FHome(), d.getAreaid(), d.getAreaname());
+//        }
     }
 
     private void IBund() {
-        GetCityName = getIntent().getStringExtra(Tag_CityName);
-        if (Spuit.BaiDuMap_Location_Get(BaseActiviy) != null) {
-            GetCityName = Spuit.BaiDuMap_Location_Get(BaseActiviy).getAreaname();
-            GetCityCode = Spuit.BaiDuMap_Location_Get(BaseActiviy).getAreaid();
+        if (getIntent().getBooleanExtra(Tage_IsFromCity, false)) {
             Citys = Spuit.AllCity_Get(BaseActiviy);
+            GetCityName = Citys.get(0).getAreaname();
+            GetCityCode = Citys.get(0).getAreaid();
+            CurrentPostion = Citys.size() - 1;
             IBase();
         } else {
-            IGetCityCode(GetCityName);
+            GetCityName = getIntent().getStringExtra(Tag_CityName);
+            if (Spuit.BaiDuMap_Location_Get(BaseActiviy) != null) {
+                GetCityName = Spuit.BaiDuMap_Location_Get(BaseActiviy).getAreaname();
+                GetCityCode = Spuit.BaiDuMap_Location_Get(BaseActiviy).getAreaid();
+                Citys = Spuit.AllCity_Get(BaseActiviy);
+                IBase();
+            } else {
+                IGetCityCode(GetCityName);
+            }
+
         }
-
-
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PromptManager.closeLoading();
+        ;
+    }
 
     private void IBase() {
         for (int i = 0; i < Citys.size(); i++) {
@@ -168,8 +181,8 @@ public class ANewHome extends ABase {
             @Override
             public void onPageSelected(int position) {
                 CurrentPostion = position;
-                newhomeCircleindicator.setCurrentPage(CurrentPostion);
-                StrUtils.SetTxt(newhomeCityTitle, Citys.get(CurrentPostion).getAreaname());
+                newhomeCircleindicator.setCurrentPage(position);
+                StrUtils.SetTxt(newhomeCityTitle, Citys.get(position).getAreaname());
             }
 
             @Override
@@ -196,8 +209,10 @@ public class ANewHome extends ABase {
                 PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, ACitys.class));
                 break;
             case R.id.newhome_share_bt:
-                newhomeTitleUpLay.setVisibility(View.GONE);
-                SaveUiUtils.SaveScreen(ANewHome.this);
+//                newhomeTitleUpLay.setVisibility(View.GONE);
+//                SaveUiUtils.SaveScreen(ANewHome.this);
+                PromptManager.showLoading(BaseContext);
+                SaveUiUtils.SaveScrollView(FragmentLs.get(CurrentPostion).GetScrollview());
                 PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AShareWeather.class));
                 break;
         }

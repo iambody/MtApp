@@ -4,21 +4,34 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/share_share_Iv"
+    <ScrollView
+        android:id="@+id/shareweather_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@mipmap/home_bg2" />
+        android:scrollbars="none"
+        android:background="@mipmap/home_bg2">
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/qrcode"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="160dp"
-        android:layout_marginRight="@dimen/ui_30_dip"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/share_share_Iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/home_bg2" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="@dimen/ui_30_dip"
+                android:layout_marginTop="100dp"
+                android:src="@mipmap/qrcode" />
+        </RelativeLayout>
+    </ScrollView>
+
 
     <LinearLayout
         android:id="@+id/share_down_lay"
@@ -26,8 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/transparent3"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/share_weixin_lay"

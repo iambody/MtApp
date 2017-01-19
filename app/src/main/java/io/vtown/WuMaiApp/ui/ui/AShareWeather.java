@@ -11,16 +11,15 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import java.io.File;
-import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.Utilss.SaveUiUtils;
-import io.vtown.WuMaiApp.Utilss.ViewUtils;
 import io.vtown.WuMaiApp.constant.PromptManager;
 import io.vtown.WuMaiApp.ui.ABase;
 
@@ -39,6 +38,8 @@ public class AShareWeather extends ABase {
     LinearLayout shareQuanLay;
     @Bind(R.id.share_down_lay)
     LinearLayout shareDownLay;
+    @Bind(R.id.shareweather_scrollview)
+    ScrollView shareweatherScrollview;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,34 +62,43 @@ public class AShareWeather extends ABase {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+      PromptManager.closeLoading();
+    }
+
     @OnClick({R.id.share_weixin_lay, R.id.share_quan_lay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.share_weixin_lay:
-                shareDownLay.setVisibility(View.GONE);
-                SaveUiUtils.SaveScreen(AShareWeather.this);
+//                shareDownLay.setVisibility(View.GONE);
+                PromptManager.showLoading(BaseContext);
+                SaveUiUtils.SaveScrollView(shareweatherScrollview);
                 Share(true);
                 break;
             case R.id.share_quan_lay:
-                shareDownLay.setVisibility(View.GONE);
-                SaveUiUtils.SaveScreen(AShareWeather.this);
+//                shareDownLay.setVisibility(View.GONE);
+                PromptManager.showLoading(BaseContext);
+                SaveUiUtils.SaveScrollView(shareweatherScrollview);
                 Share(false);
                 break;
         }
     }
-private void Share(boolean haoyou){
+
+    private void Share(boolean haoyou) {
         Uri uriToImage = Uri.fromFile(SaveFile);
         Intent shareIntent = new Intent();
         //发送图片到朋友圈
         //ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
         //发送图片给好友。
-        ComponentName comp = new ComponentName("com.tencent.mm",haoyou?"com.tencent.mm.ui.tools.ShareImgUI":"com.tencent.mm.ui.tools.ShareToTimeLineUI");
+        ComponentName comp = new ComponentName("com.tencent.mm", haoyou ? "com.tencent.mm.ui.tools.ShareImgUI" : "com.tencent.mm.ui.tools.ShareToTimeLineUI");
         shareIntent.setComponent(comp);
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
         shareIntent.setType("image/jpeg");
         startActivity(Intent.createChooser(shareIntent, "分享图片"));
-}
+    }
 //    private void ShareWeather(int Type) {
 //        ShareSDK.initSDK(BaseContext);
 //        if (!ViewUtils.isWeixinAvilible(BaseContext)) {

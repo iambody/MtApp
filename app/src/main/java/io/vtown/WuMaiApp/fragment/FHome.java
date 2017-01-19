@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -121,6 +122,10 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
             fragmentHscrollviewLay.addView(ItemView);
 
         }
+    }
+
+    public ScrollView GetScrollview() {
+        return fragmentHomeHomescrollview;
     }
 
     @Override

@@ -2,9 +2,11 @@ package io.vtown.WuMaiApp.Utilss;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Environment;
 import android.view.View;
+import android.widget.ScrollView;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -146,5 +148,72 @@ public class SaveUiUtils {
                     }
                 }
             }
+    }
+//***********************************************************************************************************************
+
+    /**
+     * 截取scrollview的屏幕
+     **/
+    public static Bitmap getScrollViewBitmap(ScrollView scrollView, String picpath) {
+        int h = 0;
+        Bitmap bitmap;
+        // 获取listView实际高度
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+        }
+//        Log.d(TAG, "实际高度:" + h);
+//        Log.d(TAG, " 高度:" + scrollView.getHeight());
+        // 创建对应大小的bitmap
+        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
+                Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
+        scrollView.draw(canvas);
+        // 测试输出
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(picpath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (null != out) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.flush();
+                out.close();
+            }
+        } catch (IOException e) {
+        }
+        return bitmap;
+    }
+
+
+    // 程序入口 截取ScrollView
+    public static void SaveScrollView(ScrollView scrollView ) {
+        String picName = "share.jpg";
+        if (SaveFile.exists()) {
+            RecursionDeleteFile(SaveFile);
+        } else {
+            SaveFile.mkdir();
+        }
+
+
+        savePicss(getScrollViewBitmap(scrollView, SaveFile + File.separator + picName), SaveFile + File.separator + picName);
+    }
+
+    // 保存到sdcard
+    public static void savePicss(Bitmap b, String strFileName) {
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(strFileName);
+            if (null != fos) {
+                b.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                fos.flush();
+                fos.close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
