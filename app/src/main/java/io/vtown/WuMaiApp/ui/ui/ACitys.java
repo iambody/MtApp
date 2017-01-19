@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,7 @@ public class ACitys extends ABase {
     @Bind(R.id.tv_frist_city_aqi)
     TextView tvFristCityAqi;
 
-    private List<BLSearchResultCites> mDataList = new ArrayList<BLSearchResultCites>();
+    private List<BLSearchResultCites> mNoDragData = new ArrayList<BLSearchResultCites>();
     private List<BLSearchResultCites> mCites = new ArrayList<BLSearchResultCites>(Constans.City_Count);
     private List<BLSearchResultCites> mArea_infos;
     private MyAdapter mListAdapter;
@@ -84,11 +85,17 @@ public class ACitys extends ABase {
         title_layout.findViewById(R.id.iv_go_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ACitys.this.finish();
+
+                if (isDrag()) {
+                    backTo();
+                } else {
+                    ACitys.this.finish();
+                }
+
+
             }
         });
     }
-
 
 
     @Override
@@ -156,6 +163,7 @@ public class ACitys extends ABase {
     private void initCache() {
         mFristCity = Spuit.BaiDuMap_Location_Get(BaseContext);
         mCites = Spuit.Location_City_Get(BaseContext);
+        mNoDragData = mCites;
     }
 
     private String getAreaid_Str(List<BLSearchResultCites> data) {
@@ -341,6 +349,50 @@ public class ACitys extends ABase {
 //            //getAreaInfo(mCites);
 //            //initView();
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (isDrag()) {
+            backTo();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    private void backTo() {
+
+        Intent intent = new Intent(BaseContext, ANewHome.class);
+        intent.putExtra(ANewHome.Tage_IsFromCity, true);
+        intent.putExtra("isdrag", true);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        ACitys.this.finish();
+
+    }
+
+    /*
+    * 判断是否删除过，是否移动过
+    * */
+    private boolean isDrag() {
+        boolean flag = false;
+        List<BLSearchResultCites> data = mListAdapter.getData();
+        List<BLSearchResultCites> noDrags = mListAdapter.getmNoDragDatas();
+        if (!mListAdapter.isDelete) {
+            for (int i = 0; i < noDrags.size(); i++) {
+                if (!noDrags.get(i).getAreaid().equals(data.get(i).getAreaid())) {
+                    flag = true;
+                    break;
+                } else {
+                    flag = false;
+                }
+            }
+        } else {
+            flag = true;
+        }
+        return flag;
     }
 
     @Override

@@ -15,11 +15,14 @@ public abstract class DragListViewAdapter extends BaseAdapter {
 
     public Context mContext;
     public List<BLSearchResultCites> mDragDatas;
-    public List<BLSearchResultCites> mInfodata ;
+    public List<BLSearchResultCites> mNoDragDatas = new ArrayList<BLSearchResultCites>() ;
+    public boolean isDrag = false;//是否移动过
+    public boolean isDelete = false;//是否删除过
 
     public DragListViewAdapter(Context context, List<BLSearchResultCites> dataList){
         this.mContext = context;
         this.mDragDatas = dataList;
+        this.mNoDragDatas.addAll(dataList);
 
 
     }
@@ -49,12 +52,12 @@ public abstract class DragListViewAdapter extends BaseAdapter {
     public void swapData(int from, int to){
         Collections.swap(mDragDatas, from, to);
         //Collections.swap(mInfodata, from, to);
-
+        isDrag = true;
         notifyDataSetChanged();
     }
 
     public void setInfoData(List<BLSearchResultCites> infodata){
-        this.mInfodata = infodata;
+        this.mNoDragDatas = infodata;
         notifyDataSetChanged();
     }
 
@@ -62,9 +65,14 @@ public abstract class DragListViewAdapter extends BaseAdapter {
         return this.mDragDatas;
     }
 
+    public List<BLSearchResultCites> getmNoDragDatas(){
+        return this.mNoDragDatas;
+    }
+
     public void deleteData(int position) {
         mDragDatas.remove(position);
         //mInfodata.remove(position);
+        isDelete = true;
         notifyDataSetChanged();
     }
 }
