@@ -2,23 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dodgerblue"
+    android:background="@color/title_bg"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     >
 
     <ImageView
         android:id="@+id/iv_go_back"
-        android:layout_width="20dp"
+        android:layout_width="15dp"
         android:layout_height="20dp"
-        android:layout_margin="16dp"
+        android:layout_margin="14dp"
         android:src="@drawable/btn_goback" />
 
     <View
         android:layout_width="0.2dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="13dp"
         android:background="@color/white"
         />
 

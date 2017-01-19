@@ -97,15 +97,15 @@ public class Spuit {
      * @param context
      * @return
      */
-    public static List<String> Search_City_History_Get(Context context) {
-        List<String> datalist = new ArrayList<String>();
+    public static List<BLSearchResultCites> Search_City_History_Get(Context context) {
+        List<BLSearchResultCites> datalist = new ArrayList<BLSearchResultCites>();
         SharedPreferences Sp = context.getSharedPreferences(
                 Sp_Save_History_Search, Context.MODE_PRIVATE);
         String history_search = Sp.getString("history_search", "");
         if (StrUtils.isEmpty(history_search)) {
             return datalist;
         }
-        datalist = JSON.parseArray(history_search, String.class);
+        datalist = JSON.parseArray(history_search, BLSearchResultCites.class);
         return datalist;
     }
 
@@ -116,7 +116,7 @@ public class Spuit {
      * @param
      */
     public static void Search_City_History_Save(Context pcContext,
-                                                List<String> cache) {
+                                                List<BLSearchResultCites> cache) {
         String s = "";
 
         SharedPreferences Sp = pcContext.getSharedPreferences(

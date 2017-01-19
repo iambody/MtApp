@@ -70,9 +70,20 @@ public class ACitys extends ABase {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initCache();
+        initTitleView();
         initFristView();
         //initView();
 
+    }
+
+    private void initTitleView() {
+        View title_layout = findViewById(R.id.title_layout);
+        title_layout.findViewById(R.id.iv_go_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ACitys.this.finish();
+            }
+        });
     }
 
     private void initFristView() {
@@ -128,10 +139,8 @@ public class ACitys extends ABase {
     protected void onPause() {
         super.onPause();
         if (mListAdapter != null) {
-            mCites = mListAdapter.getData();
-            Spuit.Location_City_Save(BaseContext,mCites);
+            Spuit.Location_City_Save(BaseContext,mListAdapter.getData());
         }
-
     }
 
 

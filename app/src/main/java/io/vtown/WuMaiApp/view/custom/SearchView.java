@@ -124,7 +124,8 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 BLSearchResultCites item = (BLSearchResultCites) city_lv_search_results.getAdapter().getItem(i);
                 BMessage message = new BMessage(BMessage.Tage_Select_City);
                 EventBus.getDefault().post(message);
-
+                List<BLSearchResultCites> history_city = Spuit.Search_City_History_Get(mContext);
+                checkHistoryCity(history_city,item);
                 List<BLSearchResultCites> Cites = Spuit.Location_City_Get(mContext);
                 BLSearchResultCites fristcity = Spuit.BaiDuMap_Location_Get(mContext);
                 checkCity(Cites,item,fristcity);
@@ -133,17 +134,27 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 }
 
             }
+
+
         });
 
         city_lv_history_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String txt = city_lv_history_search.getAdapter().getItem(i).toString();
-                etInput.setText(txt);
-                etInput.setSelection(txt.length());
+                //String txt = city_lv_history_search.getAdapter().getItem(i).toString();
+
+                BLSearchResultCites item = (BLSearchResultCites) city_lv_history_search.getAdapter().getItem(i);
+                BMessage message = new BMessage(BMessage.Tage_Select_City);
+                EventBus.getDefault().post(message);
+                List<BLSearchResultCites> Cites = Spuit.Location_City_Get(mContext);
+                BLSearchResultCites fristcity = Spuit.BaiDuMap_Location_Get(mContext);
+                checkCity(Cites,item,fristcity);
+                if (mListener != null) {
+                    mListener.onClickResultItem(item);
+                }
                 lvTips.setVisibility(View.GONE);
-                history_search_layout.setVisibility(View.GONE);
-                notifyStartSearching(txt);
+                //history_search_layout.setVisibility(View.GONE);
+
             }
         });
 
@@ -191,13 +202,43 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         });
     }
 
-    private void checkCity(List<BLSearchResultCites> mCites, BLSearchResultCites blSearchResultCites, BLSearchResultCites fristcity){
-        if (mCites.size() > 0) {
-            for (int i = 0; i < mCites.size(); i++) {
-                if (!mCites.get(i).getAreaid().equals(blSearchResultCites.getAreaid()) && !fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
-                    mCites.add(blSearchResultCites);
+
+    private void checkHistoryCity(List<BLSearchResultCites> history_city, BLSearchResultCites item) {
+        if(history_city.size() > 0){
+            boolean flag = false;
+            for (int i = 0; i < history_city.size(); i++) {
+                if (!history_city.get(i).getAreaid().equals(item.getAreaid())) {
+                    flag = false;
+                }else{
+                    flag = true;
+                    break;
                 }
             }
+            if(!flag){
+                history_city.add(item);
+            }
+        }else{
+            history_city.add(item);
+        }
+        Spuit.Search_City_History_Save(mContext, history_city);
+    }
+
+
+    private void checkCity(List<BLSearchResultCites> mCites, BLSearchResultCites blSearchResultCites, BLSearchResultCites fristcity){
+        if (mCites.size() > 0) {
+            boolean flag = false;
+            for (int i = 0; i < mCites.size(); i++) {
+                if (!mCites.get(i).getAreaid().equals(blSearchResultCites.getAreaid()) && !fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
+                    flag = false;
+                }else{
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag){
+                mCites.add(blSearchResultCites);
+            }
+
         } else {
             if (!fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
                 mCites.add(blSearchResultCites);
@@ -265,11 +306,11 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             if (!"".equals(charSequence.toString())) {
                 history_search_layout.setVisibility(View.GONE);
                 ivDelete.setVisibility(VISIBLE);
-                lvTips.setVisibility(VISIBLE);
-                city_lv_search_results.setVisibility(View.GONE);
-                if (mAutoCompleteAdapter != null && lvTips.getAdapter() != mAutoCompleteAdapter) {
-                    lvTips.setAdapter(mAutoCompleteAdapter);
-                }
+                lvTips.setVisibility(GONE);
+                city_lv_search_results.setVisibility(View.VISIBLE);
+//                if (mAutoCompleteAdapter != null && lvTips.getAdapter() != mAutoCompleteAdapter) {
+//                    lvTips.setAdapter(mAutoCompleteAdapter);
+//                }
                 //更新autoComplete数据
                 if (mListener != null) {
                     mListener.onRefreshAutoComplete(charSequence + "");
@@ -309,7 +350,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                     city_lv_search_results.setVisibility(View.GONE);
                 } else {
                     history_search_layout.setVisibility(View.GONE);
-                    lvTips.setVisibility(VISIBLE);
+                    lvTips.setVisibility(GONE);
                 }
 
                 break;
@@ -329,7 +370,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
             case R.id.delete_all_history:
                 mHintAdapter.removeData();
-                Spuit.Search_City_History_Save(mContext, new ArrayList<String>());
+                Spuit.Search_City_History_Save(mContext, new ArrayList<BLSearchResultCites>());
                 history_search_layout.setVisibility(View.GONE);
                 break;
         }

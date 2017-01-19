@@ -82,7 +82,7 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
     private List<BLSearchResultCites> resultData;
     // private List<BLSearchResultCites> dbData;
     private SearchResultAdapter resultAdapter;
-    private List<String> hintData;
+    private List<BLSearchResultCites> hintData;
     private HistorySearchAdapter hintAdapter;
     private List<String> autoCompleteData;
 
@@ -129,7 +129,7 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
         //初始化热搜版数据
         getHintData();
         //初始化自动补全数据
-        getAutoCompleteData(null);
+        //getAutoCompleteData(null);
         //初始化搜索结果数据
         getResultData(null);
     }
@@ -216,7 +216,7 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
             hintAdapter = new HistorySearchAdapter(hintData, R.layout.item_search_hint);
             //cityLvHistorySearch.setAdapter(hintAdapter);
         } else {
-            Spuit.Search_City_History_Save(BaseContext, hintData);
+
             //historySearchLayout.setVisibility(View.GONE);
             hintAdapter.notifyDataSetChanged();
         }
@@ -225,17 +225,14 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
 
     @Override
     public void onRefreshAutoComplete(String text) {
-        getAreaData(text, hintSize, TYPE_AOTO_DATA);
+        //getAreaData(text, 20, TYPE_AOTO_DATA);
+        getAreaData(text, 20, TYPE_RESULT_DATA);
     }
 
     @Override
     public void onSearch(String text) {
-        if (!hintData.contains(text)) {
-            hintData.add(text);
-            getHintData();
-        }
         //更新result数据
-        getAreaData(text, 20, TYPE_RESULT_DATA);
+
 //        //getResultData(text);
 //        cityLvSearchResults.setVisibility(View.VISIBLE);
 //        //第一次获取结果 还未配置适配器
@@ -331,11 +328,11 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
 
    public class HistorySearchAdapter extends BaseAdapter {
 
-        private List<String> datas = new ArrayList<String>();
+        private List<BLSearchResultCites> datas = new ArrayList<BLSearchResultCites>();
         private int layoutId;
         private LayoutInflater inflater;
 
-        public HistorySearchAdapter(List<String> datas, int layoutId) {
+        public HistorySearchAdapter(List<BLSearchResultCites> datas, int layoutId) {
             super();
             this.datas = datas;
             this.layoutId = layoutId;
@@ -384,7 +381,7 @@ public class AAddCity extends ABase implements SearchView.SearchViewListener {
                 holder = (HistoryHolder) view.getTag();
             }
 
-            StrUtils.SetTxt(holder.tvSearchHistoryCityname, datas.get(i));
+            StrUtils.SetTxt(holder.tvSearchHistoryCityname, datas.get(i).getAreaname());
             final int position = i;
             holder.ivDeleteHistory.setOnClickListener(new View.OnClickListener() {
                 @Override

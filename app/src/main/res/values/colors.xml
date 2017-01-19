@@ -178,6 +178,8 @@
     <color name="transparent">#00000000</color>
     <color name="app_fen2">#abFF4878</color>
 
+    <color name="title_bg">#98D9FF</color>
+
 
     <color name="level1">#8AC15A</color>
     <color name="level2">#ECC560</color>

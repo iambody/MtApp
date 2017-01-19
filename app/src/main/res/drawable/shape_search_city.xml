@@ -7,7 +7,7 @@
         />
     <stroke
         android:color="@color/grey"
-        android:width="@dimen/line_size2"
+        android:width="@dimen/line_size3"
         />
 
 </shape>
