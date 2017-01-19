@@ -46,8 +46,6 @@ public class AShareWeather extends ABase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shareweather);
         ButterKnife.bind(this);
-
-
         IBaseVV();
     }
 

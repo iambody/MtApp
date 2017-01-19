@@ -172,6 +172,7 @@ public class ANewHome extends ABase {
         newhomeCircleindicator.initData(FragmentLs.size(), CurrentPostion);
         //设置当前的页面
         newhomeCircleindicator.setCurrentPage(CurrentPostion);
+        newhomeViewpage.setCurrentItem(CurrentPostion);
         newhomeViewpage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
