@@ -266,9 +266,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                     mCites.add(blSearchResultCites);
                 }
             }else {
-                if (!fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
                     mCites.add(blSearchResultCites);
-                }
             }
             Spuit.Location_City_Save(mContext, mCites);
         }
