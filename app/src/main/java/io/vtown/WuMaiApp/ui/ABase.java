@@ -121,4 +121,37 @@ public class ABase extends AppCompatActivity {
                 break;
         }
     }
+
+    /**
+     * 根据level获取对应的色值
+     */
+    public int GetLevelColeo(int level,Context cn) {
+        switch (level) {
+            case 0:
+                return cn.getResources().getColor(R.color.level1);
+
+            case 1:
+                return cn.getResources().getColor(R.color.level2);
+
+            case 2:
+                return cn.getResources().getColor(R.color.level3);
+
+            case 3:
+                return cn.getResources().getColor(R.color.level4);
+
+            case 4:
+                return cn.getResources().getColor(R.color.level5);
+
+            case 5:
+                return cn.getResources().getColor(R.color.level6);
+
+            case 6:
+                return cn.getResources().getColor(R.color.level7);
+
+            default:
+                return cn.getResources().getColor(R.color.level2);
+
+
+        }
+    }
 }

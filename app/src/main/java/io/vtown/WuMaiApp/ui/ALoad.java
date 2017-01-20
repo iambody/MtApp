@@ -26,11 +26,13 @@ import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
 import io.vtown.WuMaiApp.constant.Constans;
 import io.vtown.WuMaiApp.constant.PromptManager;
+import io.vtown.WuMaiApp.constant.Spuit;
 import io.vtown.WuMaiApp.interf.IHttpResult;
 import io.vtown.WuMaiApp.module.BUpData;
 import io.vtown.WuMaiApp.service.DownloadService;
 import io.vtown.WuMaiApp.service.LocationService;
 import io.vtown.WuMaiApp.service.upgrade.UpdateManager;
+import io.vtown.WuMaiApp.ui.ui.AAddCity;
 import io.vtown.WuMaiApp.ui.ui.ACitys;
 import io.vtown.WuMaiApp.ui.ui.AHome;
 import io.vtown.WuMaiApp.ui.ui.ANewHome;
@@ -46,8 +48,19 @@ public class ALoad extends ABase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aload);
         ButterKnife.bind(this);
-        startActivity(new Intent(ALoad.this, ANewHome.class).putExtra(ANewHome.Tag_CityName, "北京市"));
-        BaseActiviy.finish();
+//        startActivity(new Intent(ALoad.this, ANewHome.class).putExtra(ANewHome.Tag_CityName, "北京市"));
+//            BaseActiviy.finish();
+//        if (Spuit.BaiDuMap_Location_Get(this) != null) {
+//            startActivity(new Intent(ALoad.this, ANewHome.class).putExtra(ANewHome.Tag_CityName, Spuit.BaiDuMap_Location_Get(this).getAreaname()));
+//            BaseActiviy.finish();
+//        } else {
+//            locationService = ((MyApplication) getApplication()).locationService;
+//            //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+//            locationService.registerListener(mListener);
+//            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+//            locationService.start();// 定位SDK
+//        }
+//        PromptManager.showtextLoading(this,getResources().getString(R.string.locationing));
     }
 
     private void ISplash() {
@@ -112,7 +125,7 @@ public class ALoad extends ABase {
                 sb.append(location.getCity());
                 sb.append("\nDistrict : ");// 区
 
-                PromptManager.ShowCustomToast(BaseContext, "城市" + location.getDistrict());
+//                PromptManager.ShowCustomToast(BaseContext, "城市" + location.getDistrict());
                 sb.append(location.getDistrict());
                 sb.append("\nStreet : ");// 街道
                 sb.append(location.getStreet());
@@ -158,23 +171,36 @@ public class ALoad extends ABase {
                 } else if (location.getLocType() == BDLocation.TypeServerError) {
                     sb.append("\ndescribe : ");
                     sb.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
+
                 } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
                     sb.append("\ndescribe : ");
                     sb.append("网络不同导致定位失败，请检查网络是否通畅");
+                    PromptManager.ShowCustomToast(BaseContext, "网络不同导致定位失败，请检查网络是否通畅");
                 } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
                     sb.append("\ndescribe : ");
                     sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
+                    PromptManager.ShowCustomToast(BaseContext, "无法获取有效定位依据导致定位失败，可能是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
                 }
 //                logMsg(sb.toString());
-                if (!StrUtils.isEmpty(location.getDistrict())) {
-                    PromptManager.SkipActivity(BaseActiviy, new Intent(BaseActiviy, AHome.class).putExtra(AHome.Tag_CityName, location.getCity()));
+                if (!StrUtils.isEmpty(location.getCity())) {
+                    startActivity(new Intent(ALoad.this, ANewHome.class).putExtra(ANewHome.Tag_CityName, location.getCity()));
                     BaseActiviy.finish();
+                } else {
+                    if (Spuit.BaiDuMap_Location_Get(ALoad.this) != null) {
+                        startActivity(new Intent(ALoad.this, ANewHome.class).putExtra(ANewHome.Tag_CityName, location.getCity()));
+                        BaseActiviy.finish();
+                    } else {
+                        PromptManager.SkipActivity(BaseActiviy, new Intent(BaseActiviy, AAddCity.class));
+                        BaseActiviy.finish();
+                    }
+
+
+
                 }
             }
         }
 
     };
-
 
 
 }

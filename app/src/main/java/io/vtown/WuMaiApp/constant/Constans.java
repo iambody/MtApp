@@ -26,7 +26,7 @@ public class Constans {
     /**
      * 开发环境 的host
      */
-    public static String Host = "http://dev.vt.api.v-town.cn";
+//    public static String Host = "http://dev.vt.api.v-town.cn";
     /**
      * 测试环境的host
      */
@@ -35,13 +35,13 @@ public class Constans {
     /**
      * 生产环境host
      */
-//    public static String Host = "https://api.v-town.cc";
+    public static String Host = "https://api.v-town.cc";
 
 
     /**
      * 开发环境key
      */
-    public static String SignKey = "GriE93gIGp$5bDjQ4rc20FzxWGghTIau";
+//    public static String SignKey = "GriE93gIGp$5bDjQ4rc20FzxWGghTIau";
     /**
      * 测试环境key
      */
@@ -49,7 +49,7 @@ public class Constans {
     /**
      * 正式环境的key
      */
-//    public static String SignKey = "hkf%t5SMv1HtrVS!Y%B!NPNS!!0cWgy";
+    public static String SignKey = "hkf%t5SMv1HtrVS!Y%B!NPNS!!0cWgy";
 
             public static final int City_Count = 7;
     public static final int History_City_Count = 8;

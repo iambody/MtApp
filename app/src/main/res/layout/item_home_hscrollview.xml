@@ -7,6 +7,8 @@
     android:layout_marginRight="16dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
+    android:paddingTop="@dimen/ui_5_dip"
+    android:paddingBottom="@dimen/ui_5_dip"
     android:background="@color/transparent">
     <TextView
         android:id="@+id/item_home_hscrollview_txt"

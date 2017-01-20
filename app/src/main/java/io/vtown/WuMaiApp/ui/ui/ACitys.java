@@ -343,7 +343,6 @@ public class ACitys extends ABase {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ReciveMessage(BMessage message) {
         if (BMessage.Tage_Select_City == message.getTage_Message()) {
-
             ACitys.this.finish();
         }
     }

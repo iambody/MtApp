@@ -66,6 +66,8 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
     private String CityName;
 
     private MyFragHomeAp myFragHomeAp;
+    private int Level;
+    private boolean HavewinflaterHs;
 
     @Override
     protected void create(Bundle Mybundle) {
@@ -87,11 +89,11 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
     @Override
     protected void onFirstUserVisible() {
         IbaseView(); //开始刷新数据
-        if (StrUtils.isEmpty(Spuit.CityDetail_Get(CityCode, FBaseActivity))) {//没有缓存
-            NetHomeData(CityCode, true);
-        } else {//有缓存
+        if (!StrUtils.isEmpty(Spuit.CityDetail_Get(CityCode, FBaseActivity))) {//没有缓存
             IFrashData(JSON.parseObject(Spuit.CityDetail_Get(CityCode, FBaseActivity), BHome.class));
             NetHomeData(CityCode, false);
+        } else {//有缓存
+            NetHomeData(CityCode, true);
         }
     }
 
@@ -110,6 +112,10 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
 
     public void FrashHSView(BHome home) {
         fragmentHomeHomescrollview.smoothScrollTo(0, 0);
+        if (HavewinflaterHs) return;
+        else {
+            HavewinflaterHs = true;
+        }
         for (int i = 0; i < home.getList().size(); i++) {
             BAqi MyAqi = home.getList().get(i);
             View ItemView = LayoutInflater.from(FBaseActivity).inflate(R.layout.item_home_hscrollview, null);
@@ -126,6 +132,10 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
 
     public ScrollView GetScrollview() {
         return fragmentHomeHomescrollview;
+    }
+
+    public int GetLeve() {
+        return Level;
     }
 
     @Override
@@ -168,6 +178,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
         fragmentUpCityLevel.setText(bHome.getAqi() + "");
         fragmentUpCityLevelDesc.setText(bHome.getAqi_detail());
         FrashHSView(bHome);
+        Level = bHome.getAqi_level();
         SetLevelIv(bHome.getAqi_level(), fragmentHomeOutLay);
         myFragHomeAp.FrashData(bHome.getSeven_list());
         BMessage message = new BMessage(BMessage.Tage_F_To_Home_Data);

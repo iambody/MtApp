@@ -40,13 +40,20 @@ public class AShareWeather extends ABase {
     LinearLayout shareDownLay;
     @Bind(R.id.shareweather_scrollview)
     ScrollView shareweatherScrollview;
+    private int Levell = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shareweather);
         ButterKnife.bind(this);
+        IBund();
         IBaseVV();
+    }
+
+    private void IBund() {
+        if (getIntent().getExtras().containsKey("level"))
+            Levell = getIntent().getIntExtra("level", 2);
     }
 
     private void IBaseVV() {
@@ -63,7 +70,7 @@ public class AShareWeather extends ABase {
     @Override
     protected void onPause() {
         super.onPause();
-      PromptManager.closeLoading();
+        PromptManager.closeLoading();
     }
 
     @OnClick({R.id.share_weixin_lay, R.id.share_quan_lay})
@@ -72,13 +79,13 @@ public class AShareWeather extends ABase {
             case R.id.share_weixin_lay:
 //                shareDownLay.setVisibility(View.GONE);
                 PromptManager.showLoading(BaseContext);
-                SaveUiUtils.SaveScrollView(shareweatherScrollview);
+                SaveUiUtils.SaveScrollView(shareweatherScrollview, true,GetLevelColeo(Levell,BaseActiviy));
                 Share(true);
                 break;
             case R.id.share_quan_lay:
 //                shareDownLay.setVisibility(View.GONE);
                 PromptManager.showLoading(BaseContext);
-                SaveUiUtils.SaveScrollView(shareweatherScrollview);
+                SaveUiUtils.SaveScrollView(shareweatherScrollview, true,GetLevelColeo(Levell,BaseActiviy));
                 Share(false);
                 break;
         }

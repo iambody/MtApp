@@ -19,12 +19,12 @@
                 android:id="@+id/share_share_Iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/home_bg2" />
+                android:src="@mipmap/home_bg1"/>
 
             <ImageView
                 android:id="@+id/share_qrema"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="@dimen/ui_30_dip"

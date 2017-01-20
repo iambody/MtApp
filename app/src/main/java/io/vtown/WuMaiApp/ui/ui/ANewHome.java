@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
@@ -85,6 +87,7 @@ public class ANewHome extends ABase {
     private List<BLSearchResultCites> Citys = new ArrayList<>();
     //当前的位置
     private int CurrentPostion = 0;
+    boolean isExit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,8 +160,8 @@ public class ANewHome extends ABase {
     @Override
     protected void onPause() {
         super.onPause();
-        PromptManager.closeLoading();
-        ;
+
+
     }
 
     private void IBase() {
@@ -213,9 +216,11 @@ public class ANewHome extends ABase {
             case R.id.newhome_share_bt:
 //                newhomeTitleUpLay.setVisibility(View.GONE);
 //                SaveUiUtils.SaveScreen(ANewHome.this);
-                PromptManager.showLoading(BaseContext);
-                SaveUiUtils.SaveScrollView(FragmentLs.get(CurrentPostion).GetScrollview());
-                PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AShareWeather.class));
+
+                SaveUiUtils.SaveScrollView(FragmentLs.get(CurrentPostion).GetScrollview(), false, getResources().getColor(R.color.level1));
+//                SaveUiUtils.SS(FragmentLs.get(CurrentPostion).GetScrollview());
+                PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AShareWeather.class).putExtra("level", FragmentLs.get(CurrentPostion).GetLeve()));
+
                 break;
             case R.id.newhome_wenhao:
                 PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AWeb.class));
@@ -395,5 +400,28 @@ public class ANewHome extends ABase {
 
             }
         });
+    }
+
+    /**
+     * 二次退出时候的时长标识
+     */
+    private long exitTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+
+            if ((System.currentTimeMillis() - exitTime) > 2000)  //System.currentTimeMillis()无论何时调用，肯定大于2000
+            {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+
     }
 }
