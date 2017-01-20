@@ -170,7 +170,7 @@ public class ANewHome extends ABase {
             FHome MyFhome = SetScreeSize(new FHome(), data.getAreaid(), data.getAreaname());
             FragmentLs.add(MyFhome);
         }
-
+        StrUtils.SetTxt(newhomeCityTitle, Citys.get(CurrentPostion).getAreaname());
         fragmentPagerAdapter = new MyViewPage(getSupportFragmentManager());
         newhomeViewpage.setAdapter(fragmentPagerAdapter);
         newhomeCircleindicator.initData(FragmentLs.size(), CurrentPostion);
@@ -216,11 +216,10 @@ public class ANewHome extends ABase {
             case R.id.newhome_share_bt:
 //                newhomeTitleUpLay.setVisibility(View.GONE);
 //                SaveUiUtils.SaveScreen(ANewHome.this);
-
-                SaveUiUtils.SaveScrollView(FragmentLs.get(CurrentPostion).GetScrollview(), false, getResources().getColor(R.color.level1));
+                SaveUiUtils.SaveScrollView(FragmentLs.get(CurrentPostion).GetScrollview(), false, getResources().getColor(R.color.level1),BaseContext);
 //                SaveUiUtils.SS(FragmentLs.get(CurrentPostion).GetScrollview());
                 PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AShareWeather.class).putExtra("level", FragmentLs.get(CurrentPostion).GetLeve()));
-
+//                FragmentLs.get(CurrentPostion).setBGGG();
                 break;
             case R.id.newhome_wenhao:
                 PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AWeb.class));

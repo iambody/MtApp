@@ -79,13 +79,13 @@ public class AShareWeather extends ABase {
             case R.id.share_weixin_lay:
 //                shareDownLay.setVisibility(View.GONE);
                 PromptManager.showLoading(BaseContext);
-                SaveUiUtils.SaveScrollView(shareweatherScrollview, true,GetLevelColeo(Levell,BaseActiviy));
+                SaveUiUtils.SaveScrollView(shareweatherScrollview, true,GetLevelColeo(Levell,BaseActiviy),BaseActiviy);
                 Share(true);
                 break;
             case R.id.share_quan_lay:
 //                shareDownLay.setVisibility(View.GONE);
                 PromptManager.showLoading(BaseContext);
-                SaveUiUtils.SaveScrollView(shareweatherScrollview, true,GetLevelColeo(Levell,BaseActiviy));
+                SaveUiUtils.SaveScrollView(shareweatherScrollview, true,GetLevelColeo(Levell,BaseActiviy),BaseActiviy);
                 Share(false);
                 break;
         }

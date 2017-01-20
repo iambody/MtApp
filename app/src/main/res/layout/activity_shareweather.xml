@@ -8,8 +8,8 @@
         android:id="@+id/shareweather_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:background="@mipmap/home_bg3">
+        android:background="@mipmap/home_bg3"
+        android:scrollbars="none">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -19,12 +19,12 @@
                 android:id="@+id/share_share_Iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/home_bg1"/>
+                android:src="@mipmap/home_bg1" />
 
             <ImageView
                 android:id="@+id/share_qrema"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="@dimen/ui_30_dip"
@@ -32,17 +32,17 @@
                 android:src="@mipmap/qrcode" />
 
             <TextView
-                android:text="霾太-七天雾霾预报"
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:textColor="@color/white"
-                android:layout_below="@+id/share_qrema"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                 android:layout_marginRight="@dimen/ui_8_dip"
-                android:textSize="12dp"
-                android:layout_marginTop="3dp" />
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/share_qrema"
+                android:layout_marginRight="@dimen/ui_24_dip"
+                android:layout_marginTop="3dp"
+                android:text="霾太-七天雾霾预报"
+                android:textColor="@color/white"
+                android:textSize="12dp" />
         </RelativeLayout>
     </ScrollView>
 

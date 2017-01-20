@@ -49,8 +49,8 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
     HomeScrollView fragmentHomeHomescrollview;
     @Bind(R.id.fragment_hscrollview_lay)
     LinearLayout fragmentHscrollviewLay;
-    @Bind(R.id.fragment_up_view_lay)
-    RelativeLayout fragmentUpViewLay;
+//    @Bind(R.id.fragment_up_view_lay)
+//    LinearLayout fragmentUpViewLay;
     @Bind(R.id.fragment_down_detail_ls)
     CompleteListView fragmentDownDetailLs;
     @Bind(R.id.fragment_home_out_lay)
@@ -68,6 +68,8 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
     private MyFragHomeAp myFragHomeAp;
     private int Level;
     private boolean HavewinflaterHs;
+
+    private BHome MyHomeData;
 
     @Override
     protected void create(Bundle Mybundle) {
@@ -98,15 +100,11 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
     }
 
     private void IbaseView() {
-
-
         fragmentHomeHomescrollview.setScrolListener(this);
-        LinearLayout.LayoutParams inps = new LinearLayout.LayoutParams(screenWidth, screenHeight - DimensionPixelUtil.dip2px(FBaseActivity, 26));
-        fragmentUpViewLay.setLayoutParams(inps);
+//        LinearLayout.LayoutParams inps = new LinearLayout.LayoutParams(screenWidth, screenHeight - DimensionPixelUtil.dip2px(FBaseActivity, 26));
+//        fragmentUpViewLay.setLayoutParams(inps);
         myFragHomeAp = new MyFragHomeAp();
         fragmentDownDetailLs.setAdapter(myFragHomeAp);
-
-
         fragmentHomeHomescrollview.smoothScrollTo(0, 0);
     }
 
@@ -129,7 +127,22 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
 
         }
     }
+public void SetCC(){
+   if( fragmentHscrollviewLay.getChildCount()==0&&MyHomeData!=null){
+       for (int i = 0; i < MyHomeData.getList().size(); i++) {
+           BAqi MyAqi = MyHomeData.getList().get(i);
+           View ItemView = LayoutInflater.from(FBaseActivity).inflate(R.layout.item_home_hscrollview, null);
+           ImageView Itemiv = (ImageView) ItemView.findViewById(R.id.item_home_hscrollview_iv);
+           TextView ItemTxt = (TextView) ItemView.findViewById(R.id.item_home_hscrollview_txt);
+           TextView Itemleel = (TextView) ItemView.findViewById(R.id.item_home_hscrollview_level);
+           SetLevelIv(MyAqi.getAqi_level(), Itemiv);
+           ItemTxt.setText(MyAqi.getHour());
+           Itemleel.setText(MyAqi.getAqi() + "");
+           fragmentHscrollviewLay.addView(ItemView);
 
+       }
+   }
+}
     public ScrollView GetScrollview() {
         return fragmentHomeHomescrollview;
     }
@@ -140,7 +153,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
 
     @Override
     protected void onUserVisible() {
-
+        SetCC();
     }
 
     @Override
@@ -173,6 +186,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
      * @param bHome
      */
     private void IFrashData(BHome bHome) {
+        MyHomeData = bHome;
 //        fragmentUpCityName.setText(CityName);
         StrUtils.SetTxt(fragmentUpCityName, CityName);
         fragmentUpCityLevel.setText(bHome.getAqi() + "");
@@ -214,6 +228,12 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
         map.put("is_all", "1");
         BaNHttpBaseStr.getData(Constans.GetCityTodyData, map, Request.Method.GET);
     }
+
+//    public void setBGGG() {
+//        if (MyHomeData != null) {
+//            SetLevelIv(MyHomeData.getAqi_level(), fragmentHomeOutLay);
+//        }
+//    }
 
 
     private class MyFragHomeAp extends BaseAdapter {
