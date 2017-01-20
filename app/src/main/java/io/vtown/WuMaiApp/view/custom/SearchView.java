@@ -241,29 +241,38 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
 
     private void checkCity(List<BLSearchResultCites> mCites, BLSearchResultCites blSearchResultCites, BLSearchResultCites fristcity) {
-        if (mCites.size() > 0) {
-            boolean flag = false;
-            for (int i = 0; i < mCites.size(); i++) {
-                if (!mCites.get(i).getAreaid().equals(blSearchResultCites.getAreaid()) && !fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
-                    flag = false;
-                } else {
-                    flag = true;
-                    break;
-                }
-            }
-            if (!flag) {
-                if (mCites.size() == Constans.City_Count) {//如果保存已达到上限，删除第一个再添加
-                    mCites.remove(0);
-                }
-                mCites.add(blSearchResultCites);
-            }
-
-        } else {
+        boolean flag = false;
+        if (fristcity != null) {//第一个定位城市不为空，判断是不是同一个城市
             if (!fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
-                mCites.add(blSearchResultCites);
+                flag = false;
+            } else {
+                flag = true;
             }
         }
-        Spuit.Location_City_Save(mContext, mCites);
+        if (!flag) {
+            if (mCites.size() > 0) {
+                for (int i = 0; i < mCites.size(); i++) {
+                    if (!mCites.get(i).getAreaid().equals(blSearchResultCites.getAreaid())) {
+                        flag = false;
+                    } else {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    if (mCites.size() == Constans.City_Count) {//如果保存已达到上限，删除第一个再添加
+                        mCites.remove(0);
+                    }
+                    mCites.add(blSearchResultCites);
+                }
+            }else {
+                if (!fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
+                    mCites.add(blSearchResultCites);
+                }
+            }
+            Spuit.Location_City_Save(mContext, mCites);
+        }
+
     }
 
     /**
