@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import io.vtown.WuMaiApp.R;
+import io.vtown.WuMaiApp.Utilss.NetUtil;
+import io.vtown.WuMaiApp.constant.PromptManager;
 import io.vtown.WuMaiApp.interf.IDialogResult;
 import io.vtown.WuMaiApp.view.dialog.CustomDialog;
 
@@ -45,6 +47,21 @@ public class ABase extends AppCompatActivity {
         screenWidth = getWindowManager().getDefaultDisplay().getWidth();
         screenHeight = getWindowManager().getDefaultDisplay().getHeight();
     }
+
+    /**
+     * 部分点击前检查网络
+     */
+    public boolean CheckNet(Context mContext) {
+        if (!NetUtil.isConnected(mContext)) {
+            PromptManager.ShowCustomToast(mContext,
+                    mContext.getString(R.string.check_net));
+            return true;
+        } else
+            return false;
+
+    }
+
+
 
 
     /**

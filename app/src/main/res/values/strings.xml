@@ -11,5 +11,6 @@
     <string name="updown_version">确定</string>
     <string name="check_new_version">检测到新版本</string>
     <string name="new_version">新版本</string>
+    <string name="check_net">请检查网络亲~</string>
 
 </resources>

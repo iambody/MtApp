@@ -252,6 +252,9 @@ public class ACitys extends ABase {
 
     @OnClick(R.id.iv_add_city)
     public void onClick() {
+        if(mCites.size() == Constans.City_Count){
+            PromptManager.ShowCustomToast(BaseContext,"您保存的城市已达上线，建议删除后再搜索");
+        }
         Intent intent = new Intent(BaseContext, AAddCity.class);
         startActivity(intent);
     }

@@ -27,8 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.vtown.WuMaiApp.R;
+import io.vtown.WuMaiApp.Utilss.NetUtil;
 import io.vtown.WuMaiApp.Utilss.StrUtils;
 import io.vtown.WuMaiApp.constant.Constans;
+import io.vtown.WuMaiApp.constant.PromptManager;
 import io.vtown.WuMaiApp.constant.Spuit;
 import io.vtown.WuMaiApp.module.BMessage;
 import io.vtown.WuMaiApp.module.cites.BLSearchResultCites;
@@ -126,10 +128,10 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 BMessage message = new BMessage(BMessage.Tage_Select_City);
                 EventBus.getDefault().post(message);
                 List<BLSearchResultCites> history_city = Spuit.Search_City_History_Get(mContext);
-                checkHistoryCity(history_city,item);
+                checkHistoryCity(history_city, item);
                 List<BLSearchResultCites> Cites = Spuit.Location_City_Get(mContext);
                 BLSearchResultCites fristcity = Spuit.BaiDuMap_Location_Get(mContext);
-                checkCity(Cites,item,fristcity);
+                checkCity(Cites, item, fristcity);
                 if (mListener != null) {
                     mListener.onClickResultItem(item);
                 }
@@ -143,13 +145,17 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //String txt = city_lv_history_search.getAdapter().getItem(i).toString();
-
+                if (!NetUtil.isConnected(mContext)) {
+                    PromptManager.ShowCustomToast(mContext,
+                            mContext.getString(R.string.check_net));
+                    return;
+                }
                 BLSearchResultCites item = (BLSearchResultCites) city_lv_history_search.getAdapter().getItem(i);
                 BMessage message = new BMessage(BMessage.Tage_Select_City);
                 EventBus.getDefault().post(message);
                 List<BLSearchResultCites> Cites = Spuit.Location_City_Get(mContext);
                 BLSearchResultCites fristcity = Spuit.BaiDuMap_Location_Get(mContext);
-                checkCity(Cites,item,fristcity);
+                checkCity(Cites, item, fristcity);
                 if (mListener != null) {
                     mListener.onClickResultItem(item);
                 }
@@ -180,6 +186,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
                     lvTips.setVisibility(GONE);
                     history_search_layout.setVisibility(View.GONE);
                     notifyStartSearching(etInput.getText().toString());
@@ -191,6 +198,11 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         iv_search.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!NetUtil.isConnected(mContext)) {
+                    PromptManager.ShowCustomToast(mContext,
+                            mContext.getString(R.string.check_net));
+                    return;
+                }
                 String txt = etInput.getText().toString().trim();
                 if (StrUtils.isEmpty(txt)) {
                     Toast.makeText(mContext, "请输入你要定位的城市", Toast.LENGTH_SHORT).show();
@@ -205,42 +217,42 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
 
     private void checkHistoryCity(List<BLSearchResultCites> history_city, BLSearchResultCites item) {
-        if(history_city.size() > 0){
+        if (history_city.size() > 0) {
             boolean flag = false;
             for (int i = 0; i < history_city.size(); i++) {
                 if (!history_city.get(i).getAreaid().equals(item.getAreaid())) {
                     flag = false;
-                }else{
+                } else {
                     flag = true;
                     break;
                 }
             }
-            if(!flag){
-                if(history_city.size() == Constans.History_City_Count){
+            if (!flag) {
+                if (history_city.size() == Constans.History_City_Count) {
                     history_city.remove(0);
                 }
                 history_city.add(item);
             }
-        }else{
+        } else {
             history_city.add(item);
         }
         Spuit.Search_City_History_Save(mContext, history_city);
     }
 
 
-    private void checkCity(List<BLSearchResultCites> mCites, BLSearchResultCites blSearchResultCites, BLSearchResultCites fristcity){
+    private void checkCity(List<BLSearchResultCites> mCites, BLSearchResultCites blSearchResultCites, BLSearchResultCites fristcity) {
         if (mCites.size() > 0) {
             boolean flag = false;
             for (int i = 0; i < mCites.size(); i++) {
                 if (!mCites.get(i).getAreaid().equals(blSearchResultCites.getAreaid()) && !fristcity.getAreaid().equals(blSearchResultCites.getAreaid())) {
                     flag = false;
-                }else{
+                } else {
                     flag = true;
                     break;
                 }
             }
-            if(!flag){
-                if(mCites.size() == Constans.City_Count){//如果保存已达到上限，删除第一个再添加
+            if (!flag) {
+                if (mCites.size() == Constans.City_Count) {//如果保存已达到上限，删除第一个再添加
                     mCites.remove(0);
                 }
                 mCites.add(blSearchResultCites);
@@ -251,7 +263,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 mCites.add(blSearchResultCites);
             }
         }
-        Spuit.Location_City_Save(mContext,mCites);
+        Spuit.Location_City_Save(mContext, mCites);
     }
 
     /**
@@ -310,6 +322,11 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            if (!NetUtil.isConnected(mContext)) {
+                PromptManager.ShowCustomToast(mContext,
+                        mContext.getString(R.string.check_net));
+                return;
+            }
             if (!"".equals(charSequence.toString())) {
                 history_search_layout.setVisibility(View.GONE);
                 ivDelete.setVisibility(VISIBLE);
@@ -325,9 +342,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             } else {
                 ivDelete.setVisibility(GONE);
                 city_lv_search_results.setVisibility(View.GONE);
-                if(mHintAdapter.isHaveData()){
+                if (mHintAdapter.isHaveData()) {
                     history_search_layout.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     history_search_layout.setVisibility(View.GONE);
                 }
 
@@ -348,9 +365,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 String input = etInput.getText().toString().trim();
                 if (StrUtils.isEmpty(input)) {
                     lvTips.setVisibility(GONE);
-                    if(mHintAdapter.isHaveData()){
+                    if (mHintAdapter.isHaveData()) {
                         history_search_layout.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         history_search_layout.setVisibility(View.GONE);
                     }
 
@@ -364,9 +381,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             case R.id.search_iv_delete:
                 etInput.setText("");
                 ivDelete.setVisibility(GONE);
-                if(mHintAdapter.isHaveData()){
+                if (mHintAdapter.isHaveData()) {
                     history_search_layout.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     history_search_layout.setVisibility(View.GONE);
                 }
                 city_lv_search_results.setVisibility(View.GONE);
