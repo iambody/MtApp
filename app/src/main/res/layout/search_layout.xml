@@ -80,13 +80,14 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:src="@drawable/lajixiang_iv"
-                android:layout_height="wrap_content" />
+                android:layout_width="15dp"
+                android:src="@drawable/ic_ziseshanchu_nor"
+                android:layout_height="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:text="清空历史搜索"
+                android:layout_marginLeft="3dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
