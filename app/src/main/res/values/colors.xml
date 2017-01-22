@@ -182,12 +182,14 @@
     <color name="title_bg">#ffaadee7</color>
 
 
-    <color name="level1">#8AC15A</color>
-    <color name="level2">#ECC560</color>
-    <color name="level3">#EC855D</color>
-    <color name="level4">#9E4557</color>
-    <color name="level5">#72243A</color>
-    <color name="level6">#480936</color>
-    <color name="level7">#1A0313</color>
+
+    <color name="level1">#4396d7</color>
+    <color name="level2">#5eacdb</color>
+    <color name="level3">#85b5d2</color>
+    <color name="level4">#90abbc</color>
+    <color name="level5">#8f9da6</color>
+    <color name="level6">#858b8e</color>
+    <color name="level7">#838388</color>
     <color name="item_bg">#fafafa</color>
+
 </resources>

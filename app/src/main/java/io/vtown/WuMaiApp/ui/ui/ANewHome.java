@@ -29,6 +29,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.vtown.WuMaiApp.MyApplication;
 import io.vtown.WuMaiApp.Net.vollynet.NHttpBaseStr;
 import io.vtown.WuMaiApp.R;
 import io.vtown.WuMaiApp.Utilss.SaveUiUtils;
@@ -89,12 +90,15 @@ public class ANewHome extends ABase {
     private int CurrentPostion = 0;
     boolean isExit;
 
+    private MyApplication BaMyApplication;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newhome);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        BaMyApplication = (MyApplication) getApplication();
         UpCheck();
         IBund();
     }
@@ -216,9 +220,14 @@ public class ANewHome extends ABase {
             case R.id.newhome_share_bt:
 //                newhomeTitleUpLay.setVisibility(View.GONE);
 //                SaveUiUtils.SaveScreen(ANewHome.this);
-                SaveUiUtils.SaveScrollView(FragmentLs.get(CurrentPostion).GetScrollview(), false, getResources().getColor(R.color.level1),BaseContext);
+//                SaveUiUtils.SaveScrollView(FragmentLs.get(CurrentPostion).GetScrollview(), false, getResources().getColor(R.color.level1),BaseContext);
 //                SaveUiUtils.SS(FragmentLs.get(CurrentPostion).GetScrollview());
-                PromptManager.SkipActivity1(BaseActiviy, new Intent(BaseActiviy, AShareWeather.class).putExtra("level", FragmentLs.get(CurrentPostion).GetLeve()));
+                BHome d = FragmentLs.get(CurrentPostion).Getdatas();
+                Intent intent = new Intent(BaseActiviy, ANewShare.class);
+//                intent.putExtra("data", d);
+                BaMyApplication.setMyhomedata(d);
+                intent.putExtra("city", Citys.get(CurrentPostion).getAreaname());
+                PromptManager.SkipActivity(BaseActiviy, intent);
 //                FragmentLs.get(CurrentPostion).setBGGG();
                 break;
             case R.id.newhome_wenhao:
@@ -234,7 +243,8 @@ public class ANewHome extends ABase {
 
         @Override
         public Fragment getItem(int position) {
-            return FragmentLs.get(position);
+//            return FragmentLs.get(position);
+            return FragmentLs.get(position % FragmentLs.size());
         }
 
         @Override
@@ -242,6 +252,10 @@ public class ANewHome extends ABase {
             return FragmentLs.size();
         }
 
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;  //没有找到child要求重新加载
+        }
 //        @Override
 //        public CharSequence getPageTitle(int position) {
 //            return mTitles[position];

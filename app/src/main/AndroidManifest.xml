@@ -103,6 +103,10 @@
             android:name=".ui.ui.AShareWeather"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ui.ANewShare"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
 
         <!-- Activity。。。。 -->

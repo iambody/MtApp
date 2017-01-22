@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+
+    <ScrollView
+        android:id="@+id/fragment_home_homescrollviewa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!-- 上边的布局 -->
+            <LinearLayout
+                android:id="@+id/fragment_up_view_laya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ui_5_dip"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent6"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/ui_5_dip"
+                    android:paddingTop="@dimen/ui_5_dip">
+
+                    <ImageView
+                        android:layout_width="@dimen/ui_60_dip"
+                        android:layout_height="@dimen/ui_60_dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/ui_20_dip"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:layout_marginLeft="@dimen/ui_5_dip"
+                        android:text="霾太-7天雾霾预报"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginRight="@dimen/ui_5_dip"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/qrcode" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ui_30_dip"
+                    android:background="@color/transparent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/fragment_up_city_namea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/weather_name_size" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/fragment_up_city_levela"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="center"
+                            android:paddingRight="@dimen/ui_2_dip"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/weather_level_size" />
+
+                        <TextView
+                            android:id="@+id/fragment_up_city_level_desca"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:paddingLeft="@dimen/ui_2_dip"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/weather_level_des_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <io.vtown.WuMaiApp.view.custom.CustHScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:background="@color/transparent6"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/fragment_hscrollview_laya"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:orientation="horizontal">
+
+
+                    </LinearLayout>
+                </io.vtown.WuMaiApp.view.custom.CustHScrollView>
+
+            </LinearLayout>
+
+
+            <!-- 上边的布局****************** -->
+            <!-- 下边的列表 -->
+            <io.vtown.WuMaiApp.view.custom.CompleteListView
+                android:id="@+id/fragment_down_detail_lsa"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/transparent"
+                android:dividerHeight="@dimen/ui_10_dip"
+                android:focusable="false"
+                android:paddingTop="@dimen/ui_20_dip"
+                android:scrollbars="none" />
+            <!-- 下边的列表 -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/share_down_laya"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent3"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/share_weixin_laya"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_share_bg"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ui_5_dip"
+                android:src="@mipmap/share_wxpy" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ui_5_dip"
+                android:gravity="center"
+                android:text="@string/share_weixin"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/share_quan_laya"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_share_bg"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ui_5_dip"
+                android:src="@mipmap/sharer_weixin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ui_5_dip"
+                android:gravity="center"
+                android:text="@string/share_pyq"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

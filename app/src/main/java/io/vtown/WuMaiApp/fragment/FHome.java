@@ -49,7 +49,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
     HomeScrollView fragmentHomeHomescrollview;
     @Bind(R.id.fragment_hscrollview_lay)
     LinearLayout fragmentHscrollviewLay;
-//    @Bind(R.id.fragment_up_view_lay)
+    //    @Bind(R.id.fragment_up_view_lay)
 //    LinearLayout fragmentUpViewLay;
     @Bind(R.id.fragment_down_detail_ls)
     CompleteListView fragmentDownDetailLs;
@@ -109,11 +109,11 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
     }
 
     public void FrashHSView(BHome home) {
-        fragmentHomeHomescrollview.smoothScrollTo(0, 0);
         if (HavewinflaterHs) return;
         else {
             HavewinflaterHs = true;
         }
+
         for (int i = 0; i < home.getList().size(); i++) {
             BAqi MyAqi = home.getList().get(i);
             View ItemView = LayoutInflater.from(FBaseActivity).inflate(R.layout.item_home_hscrollview, null);
@@ -127,22 +127,24 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
 
         }
     }
-public void SetCC(){
-   if( fragmentHscrollviewLay.getChildCount()==0&&MyHomeData!=null){
-       for (int i = 0; i < MyHomeData.getList().size(); i++) {
-           BAqi MyAqi = MyHomeData.getList().get(i);
-           View ItemView = LayoutInflater.from(FBaseActivity).inflate(R.layout.item_home_hscrollview, null);
-           ImageView Itemiv = (ImageView) ItemView.findViewById(R.id.item_home_hscrollview_iv);
-           TextView ItemTxt = (TextView) ItemView.findViewById(R.id.item_home_hscrollview_txt);
-           TextView Itemleel = (TextView) ItemView.findViewById(R.id.item_home_hscrollview_level);
-           SetLevelIv(MyAqi.getAqi_level(), Itemiv);
-           ItemTxt.setText(MyAqi.getHour());
-           Itemleel.setText(MyAqi.getAqi() + "");
-           fragmentHscrollviewLay.addView(ItemView);
 
-       }
-   }
-}
+    public void SetCC() {
+        if (fragmentHscrollviewLay.getChildCount() == 0 && MyHomeData != null) {
+            for (int i = 0; i < MyHomeData.getList().size(); i++) {
+                BAqi MyAqi = MyHomeData.getList().get(i);
+                View ItemView = LayoutInflater.from(FBaseActivity).inflate(R.layout.item_home_hscrollview, null);
+                ImageView Itemiv = (ImageView) ItemView.findViewById(R.id.item_home_hscrollview_iv);
+                TextView ItemTxt = (TextView) ItemView.findViewById(R.id.item_home_hscrollview_txt);
+                TextView Itemleel = (TextView) ItemView.findViewById(R.id.item_home_hscrollview_level);
+                SetLevelIv(MyAqi.getAqi_level(), Itemiv);
+                ItemTxt.setText(MyAqi.getHour());
+                Itemleel.setText(MyAqi.getAqi() + "");
+                fragmentHscrollviewLay.addView(ItemView);
+
+            }
+        }
+    }
+
     public ScrollView GetScrollview() {
         return fragmentHomeHomescrollview;
     }
@@ -173,6 +175,10 @@ public void SetCC(){
         EventBus.getDefault().post(bMessage);
     }
 
+    public BHome Getdatas() {
+        return MyHomeData;
+
+    }
 
     @Override
     public void onDestroyView() {
@@ -273,6 +279,7 @@ public void SetCC(){
                 myItem.item_fragment_detail_v5 = convertView.findViewById(R.id.item_fragment_detail_v5);
                 myItem.item_fragment_detail_v6 = convertView.findViewById(R.id.item_fragment_detail_v6);
                 myItem.item_fragment_detail_v7 = convertView.findViewById(R.id.item_fragment_detail_v7);
+                myItem.item_fragment_detail_v8 = convertView.findViewById(R.id.item_fragment_detail_va);
                 convertView.setTag(myItem);
             } else {
                 myItem = (FMyItem) convertView.getTag();
@@ -286,6 +293,8 @@ public void SetCC(){
             ItemEightData(ItemData, 4, myItem.item_fragment_detail_v5);
             ItemEightData(ItemData, 5, myItem.item_fragment_detail_v6);
             ItemEightData(ItemData, 6, myItem.item_fragment_detail_v7);
+
+            ItemEightData(ItemData, ItemData.getList().size()-1, myItem.item_fragment_detail_v8);
             return convertView;
         }
 
@@ -334,8 +343,13 @@ public void SetCC(){
             case 6:
                 IV.setImageResource(R.mipmap.point_level7);
                 break;
-
+            case 7:
+                IV.setImageResource(R.mipmap.point_level7);
+                break;
         }
 
     }
+
+
+
 }

@@ -57,12 +57,13 @@ public class AShareWeather extends ABase {
     }
 
     private void IBaseVV() {
-        if (SaveFile.exists()) {
-            Bitmap bm = BitmapFactory.decodeFile(SaveFile.getPath());
-            //将图片显示到ImageView中
-            shareShareIv.setImageBitmap(bm);
-        }
+//        if (SaveFile.exists()) {
+//            Bitmap bm = BitmapFactory.decodeFile(SaveFile.getPath());
+//            //将图片显示到ImageView中
+//            shareShareIv.setImageBitmap(bm);
+//        }
 
+//        shareShareIv.setBackgroundResource(getResources().getColor(R.color./**/));
 //
 
     }
