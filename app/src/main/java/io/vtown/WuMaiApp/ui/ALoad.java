@@ -1,8 +1,12 @@
 package io.vtown.WuMaiApp.ui;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -48,6 +52,10 @@ public class ALoad extends ABase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aload);
         ButterKnife.bind(this);
+        if (Build.VERSION.SDK_INT >= 23) {
+            showContacts();
+        }
+
 //        startActivity(new Intent(ALoad.this, ANewHome.class).putExtra(ANewHome.Tag_CityName, "北京市"));
 //            BaseActiviy.finish();
 //        if (Spuit.BaiDuMap_Location_Get(this) != null) {
@@ -61,6 +69,54 @@ public class ALoad extends ABase {
 //            locationService.start();// 定位SDK
 //        }
 //        PromptManager.showtextLoading(this,getResources().getString(R.string.locationing));
+    }
+
+    public void showContacts() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(), "没有权限,请手动开启定位权限", Toast.LENGTH_SHORT).show();
+            // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+            ActivityCompat.requestPermissions(BaseActiviy, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE}, 100);
+        } else {
+
+        }
+    }
+
+    //Android6.0申请权限的回调方法
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            case 100:
+                locationService = ((MyApplication) getApplication()).locationService;
+                //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+                locationService.registerListener(mListener);
+                locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+                locationService.start();// 定位SDK
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+//                    locationService = ((MyApplication) getApplication()).locationService;
+//                    //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+//                    locationService.registerListener(mListener);
+//                    locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+//                    locationService.start();// 定位SDK
+//                } else {
+//                    // 没有获取到权限，做特殊处理
+//                    Toast.makeText(getApplicationContext(), "获取位置权限失败，请手动开启", Toast.LENGTH_SHORT).show();
+//                    PromptManager.SkipActivity(BaseActiviy, new Intent(BaseActiviy, AAddCity.class));
+//                    BaseActiviy.finish();
+//
+//
+//                }
+                break;
+            default:
+                break;
+        }
     }
 
     private void ISplash() {
@@ -193,7 +249,6 @@ public class ALoad extends ABase {
                         PromptManager.SkipActivity(BaseActiviy, new Intent(BaseActiviy, AAddCity.class));
                         BaseActiviy.finish();
                     }
-
 
 
                 }

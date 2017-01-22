@@ -17,15 +17,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <!-- 上边的布局 -->
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/fragment_up_view_lay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ui_100_dip"
+                    android:layout_marginTop="@dimen/ui_150_dip"
                     android:background="@color/transparent"
                     android:orientation="vertical">
 
@@ -73,7 +74,7 @@
                 <io.vtown.WuMaiApp.view.custom.CustHScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="60dp"
                     android:background="@color/transparent6"
                     android:scrollbars="none">
 
@@ -89,7 +90,7 @@
                     </LinearLayout>
                 </io.vtown.WuMaiApp.view.custom.CustHScrollView>
 
-            </RelativeLayout>
+            </LinearLayout>
 
 
             <!-- 上边的布局****************** -->

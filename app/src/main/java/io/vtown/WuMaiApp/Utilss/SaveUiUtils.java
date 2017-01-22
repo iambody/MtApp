@@ -1,6 +1,7 @@
 package io.vtown.WuMaiApp.Utilss;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import io.vtown.WuMaiApp.R;
+import io.vtown.WuMaiApp.view.custom.HomeScrollView;
 
 /**
  * Created by datutu on 2017/1/18.
@@ -157,17 +159,17 @@ public class SaveUiUtils {
     /**
      * 截取scrollview的屏幕
      **/
-    public static Bitmap getScrollViewBitmap(ScrollView scrollView, String picpath, boolean isset,int Colo) {
+    public static Bitmap getScrollViewBitmap(ScrollView scrollView, String picpath, boolean isset,int Colo,Context xxx) {
         int h = 0;
         Bitmap bitmap;
         // 获取listView实际高度
         for (int i = 0; i < scrollView.getChildCount(); i++) {
             h += scrollView.getChildAt(i).getHeight();
-            scrollView.getChildAt(i).setBackgroundColor(
-//                    Colo);
-                    Color.parseColor("#00bfff"));
+            if (isset)   scrollView.getChildAt(i).setBackgroundColor(
+                    Colo);
+//                    Color.parseColor("#00bfff"));
         }
-        if (isset) scrollView.setBackgroundResource(R.mipmap.home_bg2);
+//        if (isset) scrollView.setBackgroundResource(R.mipmap.home_bg2);
 //        Log.d(TAG, "实际高度:" + h);
 //        Log.d(TAG, " 高度:" + scrollView.getHeight());
         // 创建对应大小的bitmap
@@ -195,7 +197,9 @@ public class SaveUiUtils {
 
 
     // 程序入口 截取ScrollView
-    public static void SaveScrollView(ScrollView scrollView, boolean IsSet,int colore) {
+    public static void SaveScrollView(ScrollView scrollView, boolean IsSet, int colore, Context xx) {
+        ScrollView scrollView1s=new HomeScrollView(xx);
+        scrollView1s=scrollView;
         String picName = "share.jpg";
         if (SaveFile.exists()) {
             RecursionDeleteFile(SaveFile);
@@ -203,7 +207,7 @@ public class SaveUiUtils {
             SaveFile.mkdir();
         }
 
-        savePicss(getScrollViewBitmap(scrollView, SaveFile + File.separator + picName,IsSet,colore ), SaveFile + File.separator + picName);
+        savePicss(getScrollViewBitmap(scrollView1s, SaveFile + File.separator + picName,IsSet,colore ,xx), SaveFile + File.separator + picName);
     }
 
     // 保存到sdcard

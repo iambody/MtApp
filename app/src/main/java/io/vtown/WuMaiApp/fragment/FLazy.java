@@ -147,6 +147,8 @@ public abstract class FLazy extends FBase {
         startActivityForResult(intent, requestCode);
     }
 
+
+
 //    protected void showToast(String msg) {
 //        if (null != msg && !StringUtils.isEmpty(msg)) {
 //            Snackbar.make(((Activity) mContext).getWindow().getDecorView(), msg, Snackbar.LENGTH_SHORT).show();
