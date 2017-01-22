@@ -186,7 +186,7 @@ public class SaveUiUtils {
         }
         try {
             if (null != out) {
-                bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                 out.flush();
                 out.close();
             }
@@ -216,7 +216,7 @@ public class SaveUiUtils {
         try {
             fos = new FileOutputStream(strFileName);
             if (null != fos) {
-                b.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                b.compress(Bitmap.CompressFormat.JPEG, 70, fos);
                 fos.flush();
                 fos.close();
             }

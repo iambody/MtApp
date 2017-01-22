@@ -280,6 +280,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
                 myItem.item_fragment_detail_v6 = convertView.findViewById(R.id.item_fragment_detail_v6);
                 myItem.item_fragment_detail_v7 = convertView.findViewById(R.id.item_fragment_detail_v7);
                 myItem.item_fragment_detail_v8 = convertView.findViewById(R.id.item_fragment_detail_va);
+                myItem.item_fragment_detail_vline = (ImageView) convertView.findViewById(R.id.item_fragment_detail_vline);
                 convertView.setTag(myItem);
             } else {
                 myItem = (FMyItem) convertView.getTag();
@@ -294,7 +295,15 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
             ItemEightData(ItemData, 5, myItem.item_fragment_detail_v6);
             ItemEightData(ItemData, 6, myItem.item_fragment_detail_v7);
 
-            ItemEightData(ItemData, ItemData.getList().size()-1, myItem.item_fragment_detail_v8);
+            ItemEightData(ItemData, ItemData.getList().size() - 1, myItem.item_fragment_detail_v8);
+            if (ItemData.getList().size() == 7) {
+                myItem.item_fragment_detail_v8.setVisibility(View.GONE);
+                myItem.item_fragment_detail_vline.setVisibility(View.GONE);
+            } else {
+                myItem.item_fragment_detail_v8.setVisibility(View.VISIBLE);
+                myItem.item_fragment_detail_vline.setVisibility(View.VISIBLE);
+            }
+            ;//
             return convertView;
         }
 
@@ -308,6 +317,7 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
             View item_fragment_detail_v6;
             View item_fragment_detail_v7;
             View item_fragment_detail_v8;
+            ImageView item_fragment_detail_vline;
         }
     }
 
@@ -349,7 +359,6 @@ public class FHome extends FLazy implements HomeScrollView.OnScrollListener {
         }
 
     }
-
 
 
 }
